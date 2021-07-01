@@ -77,10 +77,11 @@ const CategoryDataTable = () => {
     };
 
     const columns = [
-        {title: 'id', field: 'id', hidden: true},
+        {title: 'id', field: '_id' ,hidden : true },
         {
+            
             title: 'id',
-            field: 'id',
+            field: '_id',
             editable: 'never',
             render: (i) => (
                 <>
@@ -97,7 +98,7 @@ const CategoryDataTable = () => {
                             <Modal.Title>Edit Product</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <EditCategoryModal title={i.id} />
+                            <EditCategoryModal categoryID={i._id} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>

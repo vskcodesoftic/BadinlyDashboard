@@ -7,7 +7,7 @@ import {toast} from 'react-toastify';
 import axios from 'axios';
 
 const EditCategoryModal = (props) => {
-    const {title} = props;
+    const {categoryID} = props;
     const {register, handleSubmit} = useForm();
     const [ImageValue, setImageValue] = useState('');
     const [t] = useTranslation();
@@ -34,7 +34,7 @@ const EditCategoryModal = (props) => {
         // );
 
         axios
-            .patch(`http://localhost:8001/api/admin/category/addSubCategory/${title}`, data)
+            .patch(`http://localhost:8001/api/admin/category/addSubCategory/${categoryID}`, data)
             .then((res) => {
                 console.log(res.data);
                 toast.success(`Product updated sucessfully !`);
