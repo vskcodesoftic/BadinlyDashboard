@@ -24,18 +24,6 @@ const CategoryPage = () => {
                             </ol>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-3 m-4">
-                            <Link to="/AddCategoryPage">
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary btn-block"
-                                >
-                                    {t('category.addCategory')}
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
                     <div>
                         <CategoryDataTable />
                     </div>

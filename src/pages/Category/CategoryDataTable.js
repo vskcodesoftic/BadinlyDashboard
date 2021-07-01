@@ -57,10 +57,14 @@ const api = axios.create({
     baseURL: `http://localhost:8001`
 });
 
-const CategoryDataTable = () => {
+const CategoryDataTable = (props) => {
     const [show, setShow] = useState(false);
     const [userID, setUserID] = useState('');
-
+    const [value, setValue] = React.useState('');
+    const handleChange = (event) => {
+      console.log(event.target.value.split(','));
+      setValue(event.target.value);
+    };
     const handleClose = () => setShow(false);
     const handleShow = (e) => {
         {
@@ -77,44 +81,20 @@ const CategoryDataTable = () => {
     };
 
     const columns = [
-        {title: 'id', field: '_id' ,hidden : true },
-        {
-            
-            title: 'id',
-            field: '_id',
-            editable: 'never',
-            render: (i) => (
-                <>
-                    <Button
-                        variant="primary"
-                        className="my-2"
-                        onClick={handleShow}
-                    >
-                        Edit
-                    </Button>
-
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Edit Product</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <EditCategoryModal categoryID={i._id} />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                Save Changes
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </>
-            )
-        },
+        {title: '_id', field: '_id',hidden:true  },
+   
 
         {title: 'category', field: 'category'},
-        {title: 'subcategory', field: 'subcategory'},
+        {title: 'subcategory', field: 'subcategory',
+        editComponent: props => (
+            <input
+              type="text"
+              value={props.value}
+              onChange={e => props.onChange(e.target.value)}
+    
+              />
+          )
+    },
        
     ];
     const [data, setData] = useState([]); // table data
@@ -136,18 +116,18 @@ const CategoryDataTable = () => {
     const handleRowUpdate = (newData, oldData, resolve) => {
         // validation
         const errorList = [];
-        if (newData.title === '') {
-            errorList.push('Please enter valid title');
+        if (newData.category === '') {
+            errorList.push('Please enter valid category');
         }
-        if (newData.description === '') {
-            errorList.push('Please enter valid description');
+        if (newData.subcategory === '') {
+            errorList.push('Please enter valid subcategory');
         }
 
         if (errorList.length < 1) {
-            api.patch(`/api/product/${newData.id}`, newData)
+            api.patch(`/api/admin/category/addSubCategory/${newData._id}`, newData)
                 .then((res) => {
                     const dataUpdate = [...data];
-                    const index = oldData.tableData.id;
+                    const index = oldData.tableData._id;
                     dataUpdate[index] = newData;
                     setData([...dataUpdate]);
                     resolve();
@@ -166,52 +146,47 @@ const CategoryDataTable = () => {
         }
     };
 
-    // const handleRowAdd = (newData, resolve) => {
-    //     // validation
-    //     const errorList = [];
-    //     if (newData.first_name === undefined) {
-    //         errorList.push('Please enter first name');
-    //     }
-    //     if (newData.last_name === undefined) {
-    //         errorList.push('Please enter last name');
-    //     }
-    //     if (
-    //         newData.email === undefined ||
-    //         validateEmail(newData.email) === false
-    //     ) {
-    //         errorList.push('Please enter a valid email');
-    //     }
+    const handleRowAdd = (newData, resolve) => {
+        // validation
+        const errorList = [];
+        if (newData.category === undefined) {
+            errorList.push('Please enter category');
+        }
+        if (newData.subcategory === undefined) {
+            errorList.push('Please enter subcategory');
+        }
+   
 
-    //     if (errorList.length < 1) {
-    //         // no error
-    //         api.post('/users', newData)
-    //             .then((res) => {
-    //                 const dataToAdd = [...data];
-    //                 dataToAdd.push(newData);
-    //                 setData(dataToAdd);
-    //                 resolve();
-    //                 setErrorMessages([]);
-    //                 setIserror(false);
-    //             })
-    //             .catch((error) => {
-    //                 setErrorMessages(['Cannot add data. Server error!']);
-    //                 setIserror(true);
-    //                 resolve();
-    //             });
-    //     } else {
-    //         setErrorMessages(errorList);
-    //         setIserror(true);
-    //         resolve();
-    //     }
-    // };
+        if (errorList.length < 1) {
+            // no error
+            api.post('/api/admin/category/addCategory', newData)
+                .then((res) => {
+                    const dataToAdd = [...data];
+                    dataToAdd.push(newData);
+                    setData(dataToAdd);
+                    resolve();
+                    setErrorMessages([]);
+                    setIserror(false);
+                })
+                .catch((error) => {
+                    setErrorMessages(['Cannot add data. Server error!']);
+                    setIserror(true);
+                    resolve();
+                });
+        } else {
+            setErrorMessages(errorList);
+            setIserror(true);
+            resolve();
+        }
+    };
 
     const handleRowDelete = (oldData, resolve) => {
         const pid = api
-            .delete(`/api/product/${oldData.id}`)
+            .delete(`/api/admin/category/${oldData._id}`)
             .then((res) => {
                 console.log(oldData.id);
                 const dataDelete = [...data];
-                const index = oldData.tableData.id;
+                const index = oldData.tableData._id;
                 dataDelete.splice(index, 1);
                 setData([...dataDelete]);
                 resolve();
@@ -251,14 +226,14 @@ const CategoryDataTable = () => {
                         data={data}
                         icons={tableIcons}
                         editable={{
-                            // onRowUpdate: (newData, oldData) =>
-                            //     new Promise((resolve) => {
-                            //         handleRowUpdate(newData, oldData, resolve);
-                            //     }),
-                            // onRowAdd: (newData) =>
-                            //     new Promise((resolve) => {
-                            //         handleRowAdd(newData, resolve);
-                            //     }),
+                            onRowUpdate: (newData, oldData) =>
+                                new Promise((resolve) => {
+                                    handleRowUpdate(newData, oldData, resolve);
+                                }),
+                            onRowAdd: (newData) =>
+                                new Promise((resolve) => {
+                                    handleRowAdd(newData, resolve);
+                                }),
                             onRowDelete: (oldData) =>
                                 new Promise((resolve) => {
                                     handleRowDelete(oldData, resolve);
