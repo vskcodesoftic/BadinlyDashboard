@@ -28,6 +28,15 @@
     "product": {
         "addProduct": "Add Prdouct"
     },
+    "slider": {
+        "addImage": "Add Slider"
+    },
+    "add": {
+        "addImage": "Add Advertisement"
+    },
+    "category": {
+        "addCategory": "Add Category"
+    },
     "main": {
         "label": {
             "moreInfo": "More info",

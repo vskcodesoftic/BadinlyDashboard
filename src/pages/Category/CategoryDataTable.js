@@ -21,6 +21,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
+import {Button} from '@app/components/index';
+import Modal from 'react-bootstrap/Modal';
+import EditCategoryModal from './EditCategoryModal';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -51,25 +54,67 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `http://beingfame.com`
+    baseURL: `http://localhost:8001`
 });
 
-const PlansDataTable = () => {
+const CategoryDataTable = () => {
+    const [show, setShow] = useState(false);
+    const [userID, setUserID] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = (e) => {
+        {
+            setUserID(e.id);
+        }
+        {
+            console.log(e.id);
+        }
+        setShow(true);
+    };
+
+    const ImageHandler = (e) => {
+        alert(e);
+    };
+
     const columns = [
         {title: 'id', field: 'id', hidden: true},
-        {title: 'category', field: 'category'},
         {
-            title: 'subcategory',
-            field: 'subcategory',
-            editable: (props) => (
-                <input
-                    name="subcategory[]"
-                    type="text"
-                    value={props.value}
-                    onChange={(e) => props.onChange(e.target.value)}
-                />
+            title: 'id',
+            field: 'id',
+            editable: 'never',
+            render: (i) => (
+                <>
+                    <Button
+                        variant="primary"
+                        className="my-2"
+                        onClick={handleShow}
+                    >
+                        Edit
+                    </Button>
+
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Product</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <EditCategoryModal title={i.id} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </>
             )
-        }
+        },
+
+        {title: 'category', field: 'category'},
+        {title: 'subcategory', field: 'subcategory'},
+       
     ];
     const [data, setData] = useState([]); // table data
 
@@ -87,29 +132,29 @@ const PlansDataTable = () => {
             });
     }, []);
 
-    const handleRowAdd = (newData, resolve) => {
+    const handleRowUpdate = (newData, oldData, resolve) => {
         // validation
         const errorList = [];
-        if (newData.category === undefined) {
-            errorList.push('Please enter title');
+        if (newData.title === '') {
+            errorList.push('Please enter valid title');
         }
-        if (newData.subcategory === undefined) {
-            errorList.push('Please enter desc');
+        if (newData.description === '') {
+            errorList.push('Please enter valid description');
         }
 
         if (errorList.length < 1) {
-            // no error
-            api.post('/api/admin/category/addCategory', newData)
+            api.patch(`/api/product/${newData.id}`, newData)
                 .then((res) => {
-                    const dataToAdd = [...data];
-                    dataToAdd.push(newData);
-                    setData(dataToAdd);
+                    const dataUpdate = [...data];
+                    const index = oldData.tableData.id;
+                    dataUpdate[index] = newData;
+                    setData([...dataUpdate]);
                     resolve();
-                    setErrorMessages([]);
                     setIserror(false);
+                    setErrorMessages([]);
                 })
                 .catch((error) => {
-                    setErrorMessages(['Cannot add data. Server error!']);
+                    setErrorMessages([`Update failed! Server error${error}`]);
                     setIserror(true);
                     resolve();
                 });
@@ -120,18 +165,57 @@ const PlansDataTable = () => {
         }
     };
 
+    // const handleRowAdd = (newData, resolve) => {
+    //     // validation
+    //     const errorList = [];
+    //     if (newData.first_name === undefined) {
+    //         errorList.push('Please enter first name');
+    //     }
+    //     if (newData.last_name === undefined) {
+    //         errorList.push('Please enter last name');
+    //     }
+    //     if (
+    //         newData.email === undefined ||
+    //         validateEmail(newData.email) === false
+    //     ) {
+    //         errorList.push('Please enter a valid email');
+    //     }
+
+    //     if (errorList.length < 1) {
+    //         // no error
+    //         api.post('/users', newData)
+    //             .then((res) => {
+    //                 const dataToAdd = [...data];
+    //                 dataToAdd.push(newData);
+    //                 setData(dataToAdd);
+    //                 resolve();
+    //                 setErrorMessages([]);
+    //                 setIserror(false);
+    //             })
+    //             .catch((error) => {
+    //                 setErrorMessages(['Cannot add data. Server error!']);
+    //                 setIserror(true);
+    //                 resolve();
+    //             });
+    //     } else {
+    //         setErrorMessages(errorList);
+    //         setIserror(true);
+    //         resolve();
+    //     }
+    // };
+
     const handleRowDelete = (oldData, resolve) => {
-        api.delete(`/api/admin/category/${oldData._id}`)
+        const pid = api
+            .delete(`/api/product/${oldData.id}`)
             .then((res) => {
-                console.log(oldData._id);
+                console.log(oldData.id);
                 const dataDelete = [...data];
-                const index = oldData.tableData._id;
+                const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
                 setData([...dataDelete]);
                 resolve();
             })
             .catch((error) => {
-                console.log(error);
                 setErrorMessages(['Delete failed! Server error']);
                 setIserror(true);
                 resolve();
@@ -156,7 +240,7 @@ const PlansDataTable = () => {
                 <Grid item />
             </Grid>
             <div className="row">
-                <div className="col-lg-12  col-sm-12 col-md-6">
+                <div className="col-lg-12 col-m-6 col-sm-12">
                     <MaterialTable
                         options={{
                             exportButton: true
@@ -166,10 +250,14 @@ const PlansDataTable = () => {
                         data={data}
                         icons={tableIcons}
                         editable={{
-                            onRowAdd: (newData) =>
-                                new Promise((resolve) => {
-                                    handleRowAdd(newData, resolve);
-                                }),
+                            // onRowUpdate: (newData, oldData) =>
+                            //     new Promise((resolve) => {
+                            //         handleRowUpdate(newData, oldData, resolve);
+                            //     }),
+                            // onRowAdd: (newData) =>
+                            //     new Promise((resolve) => {
+                            //         handleRowAdd(newData, resolve);
+                            //     }),
                             onRowDelete: (oldData) =>
                                 new Promise((resolve) => {
                                     handleRowDelete(oldData, resolve);
@@ -182,4 +270,4 @@ const PlansDataTable = () => {
     );
 };
 
-export default PlansDataTable;
+export default CategoryDataTable;

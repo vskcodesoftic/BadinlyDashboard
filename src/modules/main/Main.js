@@ -9,6 +9,7 @@ import Profile from '@pages/profile/Profile';
 import Users from '@app/pages/Users/Users';
 import ProductsPage from '@app/pages/Products/ProductsPage';
 import AdminsPage from '@app/pages/Admin/AdminPage';
+import AddSliderImage from '@app/pages/Slider/AddSliderImage';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import MenuSidebar from './menu-sidebar/MenuSidebar';
@@ -22,6 +23,8 @@ import AddsPage from '../../pages/Advertisement/AddsPage';
 import ChangePassword from '../../pages/ChangePassword/ChangePassword';
 import CategoryPage from '../../pages/Category/CategoryPage';
 import AddPrdouctPage from '../../pages/Products/AddProductPage';
+import AddAdvertisementImage from '../../pages/Advertisement/AddAdvertisementImage';
+import AddCategoryPage from '../../pages/Category/AddCategoryPage';
 
 const Main = ({onUserLoad}) => {
     const [appLoadingState, updateAppLoading] = useState(false);
@@ -128,6 +131,24 @@ const Main = ({onUserLoad}) => {
                                 exact
                                 path="/AddProductPage"
                                 component={AddPrdouctPage}
+                            />
+
+                            <Route
+                                exact
+                                path="/AddSliderImage"
+                                component={AddSliderImage}
+                            />
+
+                            <Route
+                                exact
+                                path="/AddAdvertisement"
+                                component={AddAdvertisementImage}
+                            />
+
+                            <Route
+                                exact
+                                path="/AddCategoryPage"
+                                component={AddCategoryPage}
                             />
 
                             <Route exact path="/profile" component={Profile} />

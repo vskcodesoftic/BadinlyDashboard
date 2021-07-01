@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import ImageUpdate from './ImageUpdate';
 import AddsDataTable from './AddsDataTable';
 
 const AddsPage = () => {
@@ -25,8 +24,17 @@ const AddsPage = () => {
                             </ol>
                         </div>
                     </div>
-                    <div>
-                        <ImageUpdate />
+                    <div className="row">
+                        <div className="col-3 m-4">
+                            <Link to="/AddAdvertisement">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary btn-block"
+                                >
+                                    {t('add.addImage')}
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                     <div>
                         <AddsDataTable />

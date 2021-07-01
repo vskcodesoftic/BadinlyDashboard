@@ -97,7 +97,7 @@ const ProductsDataTable = () => {
                             <Modal.Title>Edit Product</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <EditProdutModal title={i.id}  />
+                            <EditProdutModal title={i.id} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>

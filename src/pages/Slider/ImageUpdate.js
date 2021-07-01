@@ -58,62 +58,74 @@ class ImageUpdate extends Component {
             <div className="container">
                 <div className="row justify-content-md-center">
                     <div className="col-12 col-sm-6  form-wrapper">
-                        <form onSubmit={this.onSubmit}>
-                            <div className="profile-div">
-                                {this.state.imageUrl ? (
-                                    <div className="col-12 col-sm-4">
-                                        <img
-                                            width="50%"
-                                            src={imageUrl}
-                                            onClick={() =>
-                                                this.refs.image.click()
-                                            }
-                                            className="img-placeholder"
-                                            alt=""
-                                        />
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="img-placeholder"
-                                        onClick={() => this.refs.image.click()}
-                                    ></div>
-                                )}
-                                <span>Upload Slider Images</span>
-                                <input
-                                    type="file"
-                                    ref="image"
-                                    onChange={this.onChange}
-                                    className="hidden"
-                                />
-                            </div>
+                        <div className="login-box">
+                            <div className="card card-outline card-primary">
+                                <div className="card-body">
+                                    <form onSubmit={this.onSubmit}>
+                                        <div className="profile-div">
+                                            {this.state.imageUrl ? (
+                                                <div className="col-12 col-sm-4">
+                                                    <img
+                                                        width="50%"
+                                                        src={imageUrl}
+                                                        onClick={() =>
+                                                            this.refs.image.click()
+                                                        }
+                                                        className="img-placeholder"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div
+                                                    className="img-placeholder"
+                                                    onClick={() =>
+                                                        this.refs.image.click()
+                                                    }
+                                                ></div>
+                                            )}
+                                            <span>Upload Slider Images</span>
+                                            <input
+                                                type="file"
+                                                ref="image"
+                                                onChange={this.onChange}
+                                                className="hidden"
+                                            />
+                                        </div>
 
-                            <div className="form-group">
-                                <label className="label ">title</label>
-                                <input
-                                    name="title"
-                                    value={title}
-                                    onChange={this.onChange}
-                                    className="form-control"
-                                />
+                                        <div className="form-group">
+                                            <label className="label ">
+                                                title
+                                            </label>
+                                            <input
+                                                name="title"
+                                                value={title}
+                                                onChange={this.onChange}
+                                                className="form-control"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="label ">
+                                                description
+                                            </label>
+                                            <input
+                                                name="description"
+                                                value={description}
+                                                onChange={this.onChange}
+                                                className="form-control"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <button
+                                                type="submit"
+                                                className="btn btn-primary btn-block"
+                                            >
+                                                Upload Slider Images
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label className="label ">description</label>
-                                <input
-                                    name="description"
-                                    value={description}
-                                    onChange={this.onChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary btn-block"
-                                >
-                                    Upload Slider Images
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

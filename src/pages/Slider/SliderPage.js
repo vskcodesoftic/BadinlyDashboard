@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import SliderDataTable from './SliderDataTable';
-import ImageUpdate from './ImageUpdate';
 
 const SliderPage = () => {
     const [t] = useTranslation();
@@ -25,8 +24,17 @@ const SliderPage = () => {
                             </ol>
                         </div>
                     </div>
-                    <div>
-                        <ImageUpdate />
+                    <div className="row">
+                        <div className="col-3 m-4">
+                            <Link to="/AddSliderImage">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary btn-block"
+                                >
+                                    {t('slider.addImage')}
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                     <div>
                         <SliderDataTable />
