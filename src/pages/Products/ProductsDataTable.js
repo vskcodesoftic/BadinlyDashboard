@@ -21,6 +21,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
+import {Button} from '@app/components/index';
+import Modal from 'react-bootstrap/Modal';
+import EditProdutModal from '@app/pages/Products/EditProductModal';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -51,12 +54,64 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `http://beingfame.com`
+    baseURL: `http://localhost:8001`
 });
 
 const ProductsDataTable = () => {
+    const [show, setShow] = useState(false);
+    const [userID, setUserID] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = (e) => {
+        {
+            setUserID(e.id);
+        }
+        {
+            console.log(e.id);
+        }
+        setShow(true);
+    };
+
+    const ImageHandler = (e) => {
+        alert(e);
+    };
+
     const columns = [
         {title: 'id', field: 'id', hidden: true},
+        {
+            title: 'id',
+            field: 'id',
+            editable: 'never',
+            render: (i) => (
+                <>
+                    <Button
+                        variant="primary"
+                        className="my-2"
+                        onClick={handleShow}
+                    >
+                        Edit
+                    </Button>
+
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Product</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <EditProdutModal title={i.id}  />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </>
+            )
+        },
+
         {title: 'title', field: 'title'},
         {title: 'Desc', field: 'description'},
         {
@@ -91,7 +146,7 @@ const ProductsDataTable = () => {
     const [errorMessages, setErrorMessages] = useState([]);
 
     useEffect(() => {
-        api.get('/api/product/list')
+        api.get('/api/product/all')
             .then((res) => {
                 setData(res.data.products);
             })
@@ -218,10 +273,10 @@ const ProductsDataTable = () => {
                         data={data}
                         icons={tableIcons}
                         editable={{
-                            onRowUpdate: (newData, oldData) =>
-                                new Promise((resolve) => {
-                                    handleRowUpdate(newData, oldData, resolve);
-                                }),
+                            // onRowUpdate: (newData, oldData) =>
+                            //     new Promise((resolve) => {
+                            //         handleRowUpdate(newData, oldData, resolve);
+                            //     }),
                             // onRowAdd: (newData) =>
                             //     new Promise((resolve) => {
                             //         handleRowAdd(newData, resolve);
