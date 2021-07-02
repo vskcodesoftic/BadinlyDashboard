@@ -117,6 +117,7 @@ const ProductsDataTable = () => {
         {
             title: 'image',
             field: 'image',
+            
             render: (item) => (
                 <>
                     <img

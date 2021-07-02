@@ -13,7 +13,7 @@ const EditProdutModal = (props) => {
     const [t] = useTranslation();
     const fileInput = React.createRef();
     const [Data, setData] = useState('');
-
+       
     const onSubmit = (data) => {
         // still to resolve promise
         console.log(

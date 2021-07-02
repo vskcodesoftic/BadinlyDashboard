@@ -22,6 +22,8 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import {Button} from '@app/components/index';
+import Modal from 'react-bootstrap/Modal';
+import EditAddvertisementModal from './EditAddvertisementModal';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -52,10 +54,31 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `https://badilnyint.com`
+    baseURL: `http://localhost:8001`
 });
 
-const AddsDataTable = () => {
+const AddsDataTable = (props) => {
+    const [show, setShow] = useState(false);
+    const [userID, setUserID] = useState('');
+    const [title, setTitle] = useState('');
+ //description //image
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState('');
+
+    const handleClose = () => setShow(false);
+   
+   const handleClick = (event, rowData) => {
+        event.preventDefault()
+        console.log(rowData)
+        console.log(rowData.id)
+        setUserID(rowData.id)
+        setTitle(rowData.title)
+        setDescription(rowData.description)
+        setImage(rowData.description)
+
+        setShow(true)
+   }
+
     let path;
     const [state, setState] = useState({
         pictures: []
@@ -231,9 +254,33 @@ const AddsDataTable = () => {
                                     handleRowDelete(oldData, resolve);
                                 })
                         }}
+                        onRowClick={handleClick}
+
                     />
                 </div>
             </div>
+
+            <>
+                   
+
+                   <Modal show={show} onHide={handleClose}>
+                       <Modal.Header closeButton>
+                           <Modal.Title>Edit Addvertisement</Modal.Title>
+                       </Modal.Header>
+                       <Modal.Body>
+                           <EditAddvertisementModal userId={userID} title={title} description={description} image={image}/>
+                       </Modal.Body>
+                       <Modal.Footer>
+                           <Button variant="secondary" onClick={handleClose}>
+                               Close
+                           </Button>
+                           <Button variant="primary" onClick={handleClose}>
+                               Save Changes
+                           </Button>
+                       </Modal.Footer>
+                   </Modal>
+               </>
+           
         </div>
     );
 };

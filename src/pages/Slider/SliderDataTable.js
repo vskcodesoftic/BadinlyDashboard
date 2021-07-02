@@ -22,6 +22,8 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import {Button} from '@app/components/index';
+import Modal from 'react-bootstrap/Modal';
+import EditSlidertModal from './EditSlidertModal';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -52,10 +54,35 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `https://badilnyint.com`
+    baseURL: `http://localhost:8001`
 });
 
 const SliderDataTable = () => {
+    const [show, setShow] = useState(false);
+    const [userID, setUserID] = useState('');
+    const [title, setTitle] = useState('');
+ //description //image
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState('');
+
+    const handleClose = () => setShow(false);
+   
+   const handleClick = (event, rowData) => {
+        event.preventDefault()
+        console.log(rowData)
+        console.log(rowData.id)
+        setUserID(rowData.id)
+        setTitle(rowData.title)
+        setDescription(rowData.description)
+        setImage(rowData.description)
+
+        setShow(true)
+   }
+
+    const handleShow = (e) => {
+        
+        setShow(true);
+    };
     let path;
     const [state, setState] = useState({
         pictures: []
@@ -69,7 +96,10 @@ const SliderDataTable = () => {
     };
 
     const columns = [
-        {title: 'id', field: '_id', hidden: true},
+        {  title: 'id',
+        field: '_id',
+        hidden: false},
+      
         {title: 'title', field: 'title'},
         {title: 'Desc', field: 'description'},
         {
@@ -218,9 +248,12 @@ const SliderDataTable = () => {
             <div className="row">
                 <div className="col-lg-12  col-sm-12 col-md-6">
                     <MaterialTable
+                    
                         options={{
                             exportButton: true
                         }}
+                        onRowClick={handleClick}
+                    
                         title="List of Slider images"
                         columns={columns}
                         data={data}
@@ -229,11 +262,36 @@ const SliderDataTable = () => {
                             onRowDelete: (oldData) =>
                                 new Promise((resolve) => {
                                     handleRowDelete(oldData, resolve);
-                                })
+                                }),
+                                
                         }}
                     />
                 </div>
             </div>
+
+           
+                <>
+                   
+
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Slider</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <EditSlidertModal userId={userID} title={title} description={description} image={image}/>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </>
+            
+        
         </div>
     );
 };
