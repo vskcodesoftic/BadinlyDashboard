@@ -6,8 +6,11 @@ import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
 import axios from 'axios';
 
+
+
+
 const EditProdutModal = (props) => {
-    const {title} = props;
+    const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
     const {register, handleSubmit} = useForm();
     const [ImageValue, setImageValue] = useState('');
     const [t] = useTranslation();
@@ -34,7 +37,7 @@ const EditProdutModal = (props) => {
         );
 
         axios
-            .patch(`http://localhost:8001/api/product/${title}`, fd)
+            .patch(`http://localhost:8001/api/product/${userId}`, fd)
             .then((res) => {
                 console.log(res.data);
                 toast.success(`Product updated sucessfully !`);
@@ -58,7 +61,7 @@ const EditProdutModal = (props) => {
                                             required: true
                                         })}
                                         className="form-control"
-                                        placeholder="title"
+                                        placeholder= {title}
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
@@ -67,7 +70,7 @@ const EditProdutModal = (props) => {
                                             required: true
                                         })}
                                         className="form-control"
-                                        placeholder="Descreption"
+                                        placeholder={description}
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
@@ -76,7 +79,7 @@ const EditProdutModal = (props) => {
                                             required: true
                                         })}
                                         className="form-control"
-                                        placeholder="Category"
+                                        placeholder={category}
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
@@ -85,7 +88,7 @@ const EditProdutModal = (props) => {
                                             required: true
                                         })}
                                         className="form-control"
-                                        placeholder="subcategory"
+                                        placeholder={subcategory}
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
@@ -104,7 +107,8 @@ const EditProdutModal = (props) => {
                                         {...register('isFeatured', {
                                             required: true
                                         })}
-                                    >
+                                    >   
+                                        <p>{isFeatured}</p>
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
@@ -124,11 +128,12 @@ const EditProdutModal = (props) => {
                                 </div>
                                 <div className="Field-group mb-3">
                                     <input
+                                    type="number"
                                         {...register('quantity', {
                                             required: true
                                         })}
                                         className="form-control"
-                                        placeholder="quantity"
+                                        placeholder={quantity}
                                     />
                                 </div>
 

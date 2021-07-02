@@ -60,7 +60,35 @@ const api = axios.create({
 const ProductsDataTable = () => {
     const [show, setShow] = useState(false);
     const [userID, setUserID] = useState('');
+    const [title, setTitle] = useState('');
+ //description //image
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState('');
+    const [category, setCategory] = useState('');
+    const [subcategory, setSubCategory] = useState('');
+    const [quantity, setquantity] = useState('');
+    const [status, setstatus] = useState('');
+    const [isFeatured, setisFeatured] = useState('');
+    const [isShow, setisShow] = useState('')
 
+   
+   const handleClick = (event, rowData) => {
+        event.preventDefault()
+        console.log(rowData)
+        setUserID(rowData.id)
+        setTitle(rowData.title)
+        setDescription(rowData.description)
+        setImage(rowData.image)
+        setisShow(rowData.isShow)
+        setCategory (rowData.category)
+        setisFeatured(rowData.isFeatured)
+        setstatus(rowData.status)
+        setSubCategory(rowData.subcategory)
+        setquantity(rowData.quantity)
+
+
+        setShow(true)
+   }
     const handleClose = () => setShow(false);
     const handleShow = (e) => {
         {
@@ -77,41 +105,8 @@ const ProductsDataTable = () => {
     };
 
     const columns = [
-        {title: 'id', field: 'id', hidden: true},
-        {
-            title: 'id',
-            field: 'id',
-            editable: 'never',
-            render: (i) => (
-                <>
-                    <Button
-                        variant="primary"
-                        className="my-2"
-                        onClick={handleShow}
-                    >
-                        Edit
-                    </Button>
-
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Edit Product</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <EditProdutModal title={i.id} />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                Save Changes
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </>
-            )
-        },
-
+        {title: 'id', field: '_id', hidden: true},
+        
         {title: 'title', field: 'title'},
         {title: 'Desc', field: 'description'},
         {
@@ -119,7 +114,8 @@ const ProductsDataTable = () => {
             field: 'image',
             
             render: (item) => (
-                <>
+                <> 
+             
                     <img
                         src={`https://badilnyint.com/` + item.image}
                         alt=""
@@ -270,6 +266,7 @@ const ProductsDataTable = () => {
                             exportButton: true
                         }}
                         title="List of Feautured Products (title,desc are editable)"
+                        onRowClick={handleClick}
                         columns={columns}
                         data={data}
                         icons={tableIcons}
@@ -289,7 +286,43 @@ const ProductsDataTable = () => {
                         }}
                     />
                 </div>
-            </div>
+            </div>      <>
+                    {/* <Button
+                        variant="primary"
+                        className="my-2"
+                        onClick={handleShow}
+                    >
+                        Edit
+                    </Button> */}
+
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Product</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <EditProdutModal
+                             userId={userID}
+                             title={title}
+                             description={description}
+                             image={image}
+                             isFeatured={isFeatured}
+                             isShow={isShow}
+                             status={status}
+                             quantity={quantity}
+                             subcategory={subcategory}
+                             category={category} 
+                               />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </>
         </div>
     );
 };
