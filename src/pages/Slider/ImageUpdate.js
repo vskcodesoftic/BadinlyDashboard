@@ -3,22 +3,30 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import { Redirect } from "react-router-dom";
 
 import Loader from "react-js-loader";
 
 import './style.css';
 
+
 class ImageUpdate extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             image: '',
             title: '',
             description: '',
-            spinner: false
+            spinner: false,
+            redirect: false
+
 
         };
     }
+
+  
+
     onChange = (e) => {
         if (e.target.type === 'file') {
             // Assuming only image
@@ -50,7 +58,9 @@ class ImageUpdate extends Component {
             .then((res) => {
                 console.log(res.data);
                 this.setState({spinner : false})
-                toast.success(`image uploaded  sucessfully !`);
+                toast.success(`Slider uploaded  sucessfully !`);
+                this.setState({ redirect: true })
+
             })
             .catch((error) => {
                 console.log('Error');
@@ -59,7 +69,12 @@ class ImageUpdate extends Component {
     };
 
     render() {
-        const {imageUrl, description, title} = this.state;
+        const {imageUrl, description, title, redirect} = this.state;
+        
+        if (redirect) {
+            return <Redirect to='/slider'/>;
+          }
+
         return (
             <div className="container">
                 <div className="row justify-content-md-center">

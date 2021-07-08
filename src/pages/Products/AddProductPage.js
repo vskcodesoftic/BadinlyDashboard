@@ -8,6 +8,12 @@ import axios from 'axios';
 import Input from '@app/../node_modules/reactstrap/es/Input';
 import Select from 'react-select'
 import Loader from "react-js-loader";
+import { Redirect } from "react-router-dom";
+
+const refreshPage = ()=>{
+    window.location.reload();
+ }
+
 
 
 export const GetCurrentUser = () => {
@@ -21,7 +27,9 @@ const AddPrdouctPage = (props) => {
    const [Category, setCategory] = useState([])
    const [QueryCategory , SetQueryCategory] = useState([])
    const [SubCategory, setSubCategory] = useState([])
-    const [Spinner, setSpinner] = useState(false)
+    const [Spinner, setSpinner] = useState(false);
+
+    const [redirect, setredirect] = useState(false)
 
    const [FilteredSubCat, setFilteredSubCat] = useState([])
    const [FiltredSubLen, setFiltredSubLen] = useState('')
@@ -151,9 +159,9 @@ const AddPrdouctPage = (props) => {
             .post('/api/admin/postItem', fd)
             .then((res) => {
                 console.log(res.data);
-                toast.success(`Product uploaded  sucessfully !`);
+                toast.success(`Product Added sucessfully !`);
                 setSpinner(false)
-
+                setredirect(true)
             })
             .catch((error) => {
                 console.log(error);
@@ -161,7 +169,12 @@ const AddPrdouctPage = (props) => {
             });
     };
 
+    if (redirect) {
+        return <Redirect to='/products'/>;
+      }
+
     return (
+        
         <>
             <section className="content-header">
                 <div className="container-fluid">

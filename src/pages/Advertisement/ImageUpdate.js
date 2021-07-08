@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, {Component} from 'react';
 import Loader from "react-js-loader";
+import { Redirect } from "react-router-dom";
 
 import axios from 'axios';
 import {toast} from 'react-toastify';
@@ -14,7 +15,9 @@ class ImageUpdate extends Component {
             image: '',
             title: '',
             description: '',
-            spinner: false
+            spinner: false,
+            redirect: false
+
         };
     }
     onChange = (e) => {
@@ -48,8 +51,10 @@ class ImageUpdate extends Component {
             .then((res) => {
                
                 console.log(res.data);
-                toast.success(`image uploaded  sucessfully !`);
+                toast.success(`Advertisement uploaded  sucessfully !`);
                 this.setState({spinner : false})
+                this.setState({ redirect: true })
+
 
             })
             .catch((error) => {
@@ -59,7 +64,12 @@ class ImageUpdate extends Component {
     };
 
     render() {
-        const {imageUrl, description, title} = this.state;
+        const {imageUrl, description, title , redirect} = this.state;
+         
+        if (redirect) {
+            return <Redirect to='/Adds'/>;
+          }
+
         return (
             <div className="container">
                

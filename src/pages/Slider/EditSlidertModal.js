@@ -5,14 +5,27 @@ import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
 import axios from 'axios';
+import Loader from "react-js-loader";
+
+const refreshPage = ()=>{
+    window.location.reload();
+ }
 
 const EditSlidertModal = (props) => {
     const {userId, title, description, image} = props;
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit} = useForm({
+        defaultValues: {
+            userId: `${userId}`,
+            title :`${title}`,
+            description : `${description}`,
+            image : `${image}`
+        }
+    });
     const [ImageValue, setImageValue] = useState('');
     const [t] = useTranslation();
     const fileInput = React.createRef();
     const [Data, setData] = useState([]);
+    const [Spinner, setSpinner] = useState(false)
     console.log(title);
 
     const onSubmit = (data) => {
@@ -33,12 +46,16 @@ const EditSlidertModal = (props) => {
             fileInput.current.files[0],
             fileInput.current.files[0].name
         );
+        
+        setSpinner(true)
 
         axios
             .patch(`https://badilnyint.com/api/admin/baneer/b/${userId}`, fd)
             .then((res) => {
                 console.log(res.data);
                 toast.success(`Slider updated sucessfully !`);
+                setSpinner(false)
+                refreshPage();
             })
             .catch((error) => {
                 console.log('Error');
@@ -62,11 +79,10 @@ const EditSlidertModal = (props) => {
                         ))} */}
 
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <p>
-                                    {userId}
-                                    {title}
-                                </p>
-                                <div className="input-group mb-3">
+                               
+                                <div className="Field-group mb-3">
+                                <p>Title</p>
+
                                     <input
                                         {...register('title', {
                                             required: true
@@ -76,6 +92,8 @@ const EditSlidertModal = (props) => {
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
+                                <p>Description</p>
+
                                     <input
                                         {...register('description', {
                                             required: true
@@ -85,6 +103,8 @@ const EditSlidertModal = (props) => {
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
+                                <p>Image*</p>
+
                                     <input
                                         required
                                         multiple
@@ -105,6 +125,12 @@ const EditSlidertModal = (props) => {
                                         </button>
                                     </div>
                                 </div>
+                                 {Spinner ? (
+                                <Loader type="bubble-top"
+                                        className="mt-5"
+                                        bgColor={"#000000"}
+                                            title={"...loading"} size={100} /> 
+                                            ) : null }
                             </form>
                         </div>
                     </div>

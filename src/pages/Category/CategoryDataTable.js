@@ -54,6 +54,10 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
+const refreshPage = ()=>{
+    window.location.reload();
+ }
+
 const api = axios.create({
     baseURL: `https://badilnyint.com`
 });
@@ -213,6 +217,8 @@ const CategoryDataTable = (props) => {
                 dataDelete.splice(index, 1);
                 setData([...dataDelete]);
                 resolve();
+                refreshPage()
+
             })
             .catch((error) => {
                 setErrorMessages(['Delete failed! Server error']);

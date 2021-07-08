@@ -6,6 +6,12 @@ import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
 import axios from 'axios';
 
+
+
+const refreshPage = ()=>{
+    window.location.reload();
+ }
+
 const EditCategoryModal = (props) => {
     const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
     const {register, handleSubmit} = useForm({
@@ -18,6 +24,7 @@ const EditCategoryModal = (props) => {
     const [t] = useTranslation();
     const fileInput = React.createRef();
     const [Data, setData] = useState('');
+    const [Spinner, setSpinner] = useState(false)
 
     const onSubmit = (data) => {
         // still to resolve promise
@@ -37,7 +44,7 @@ const EditCategoryModal = (props) => {
         //     fileInput.current.files[0],
         //     fileInput.current.files[0].name
         // );
-
+        
         axios
             .patch(
                 `https://badilnyint.com/api/admin/category/addSubCategory/${userId}`,
@@ -45,7 +52,8 @@ const EditCategoryModal = (props) => {
             )
             .then((res) => {
                 console.log(res.data);
-                toast.success(`category sucessfully !`);
+                toast.success(`category updated sucessfully !`);
+                
             })
             .catch((error) => {
                 console.log('Error');

@@ -9,6 +9,10 @@ import axios from 'axios';
 
 
 
+const refreshPage = ()=>{
+    window.location.reload();
+ }
+
 
 const EditProdutModal = (props) => {
     const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
@@ -62,7 +66,7 @@ const EditProdutModal = (props) => {
                 console.log(res.data);
                 toast.success(`Product updated sucessfully !`);
                 setspinner(false)
-
+                refreshPage()
             })
             .catch((error) => {
                 console.log('Error');
