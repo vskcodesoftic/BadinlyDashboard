@@ -23,6 +23,10 @@ export const GetCurrentUser = () => {
 
 const AddPrdouctPage = (props) => {
     const items = []
+    let SubCategoriesFound = []
+    let SubCategoryObjectValues = []
+    let SubCategoryLength 
+
     let selectedValue;
    const [Category, setCategory] = useState([])
    const [QueryCategory , SetQueryCategory] = useState([])
@@ -33,21 +37,94 @@ const AddPrdouctPage = (props) => {
 
    const [FilteredSubCat, setFilteredSubCat] = useState([])
    const [FiltredSubLen, setFiltredSubLen] = useState('')
+
+   const [nume, setNume] = useState('')
+   const [camera, setCamera] = useState('')
+
+
+
     const api = axios.create({
         baseURL: `https://badilnyint.com/`
     });
 
   const FilterDataCopy = () => {
-        for (let index = 0; index < FiltredSubLen; index++) {
-            const element =  FilteredSubCat[index];
-            console.log("element is",element)
-             items.push(<option vlaue={element} key={index}>{element}</option>)
-
-           
-          
-        }
+    for (let index = 0; index < SubCategoryLength; index++) {
+        const element =  SubCategoriesFound[index];
+        console.log("element is",element)
+        //  items.push(<option vlaue={element} key={index}>{element}</option>)
+          items.push(element)
+      
+    }
       }
+      useEffect(() => {
 
+        axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${camera}`)
+        .then(res => {
+            //console.log("c",res.data.SubCategories[0])
+            //SubCategoriesFound is an array
+
+            const c = res.data.SubCategories[0]
+            SubCategoriesFound =res.data.SubCategories[0]
+            
+            SubCategoryLength = SubCategoriesFound.length
+
+            console.log("c",c)
+            console.log("cz",SubCategoriesFound)
+            console.log("czlen", SubCategoryLength)
+    
+             
+            const objectArray =  Object.entries(SubCategoriesFound[0]);
+    
+            objectArray.forEach(async ([key, value]) => {
+            console.log("key is h:",key); // 'one'
+            const subArry = value;
+             SubCategoryObjectValues = subArry
+            
+            console.log("values k:",SubCategoryObjectValues); // 1
+            
+            });
+
+
+          FilterDataCopy()
+
+
+
+
+
+
+            setSubCategory(res.data.SubCategories)
+            let subs ;
+            //console.log(res.data)
+
+            //console.log("gggg",SubCategory)
+            // const result =  Object.values(res.data.SubCategories);
+            //  setSubCategory(result)
+             
+            // subs =  res.data.SubCategories
+    
+    
+            // const objectArray =  Object.entries(SubCategory[0]);
+    
+            // objectArray.forEach(async ([key, value]) => {
+            // console.log("key is h:",key); // 'one'
+            // const subArry = value.subcategory;
+            //  setFilteredSubCat(subArry)
+            // const subArryLen = subArry.length;
+            
+            //  setFiltredSubLen(subArryLen)
+            // console.log("values k:",FilteredSubCat, FiltredSubLen); // 1
+            
+            // });
+ 
+                
+                })
+    
+        .catch(err => {
+            console.error(err); 
+        })
+        // do stuff
+        console.log("cccccc",camera);
+    }, [camera]);
     
    useEffect(() => {
        
@@ -61,6 +138,7 @@ const AddPrdouctPage = (props) => {
     })
             
         }, [])
+
 
 
   const subData = async () => {
@@ -95,39 +173,9 @@ const AddPrdouctPage = (props) => {
             })
   }
 
-   const dropHandler = async (e) => {
-       axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${selectedValue}`)
-       .then(res => {
-           console.log(res.data.SubCategories)
-           setSubCategory(res.data.SubCategories)
-           let subs ;
-           console.log(res.data)
-           const result =  Object.values(res.data.SubCategories);
-            setSubCategory(result)
-            
-           subs =  res.data.SubCategories
-   
-   
-           const objectArray =  Object.entries(SubCategory[0]);
-   
-           objectArray.forEach(async ([key, value]) => {
-           console.log("key is h:",key); // 'one'
-           const subArry = value.subcategory;
-            setFilteredSubCat(subArry)
-           const subArryLen = subArry.length;
-           
-            setFiltredSubLen(subArryLen)
-           console.log("values k:",FilteredSubCat, FiltredSubLen); // 1
-           
-           });
-
-               
-               })
-   
-       .catch(err => {
-           console.error(err); 
-       })
-   }
+//    const dropHandler = async (e) => {
+    
+//    }
 
      console.log(Category)
 
@@ -168,11 +216,9 @@ const AddPrdouctPage = (props) => {
                 toast.error(`something went wrong`);
             });
     };
-
-    if (redirect) {
-        return <Redirect to='/products'/>;
-      }
-
+   if (redirect) {
+            return <Redirect to='/products'/>;
+          }
     return (
         
         <>
@@ -212,8 +258,9 @@ const AddPrdouctPage = (props) => {
                                                         onChange={(e)=> {
                                                              selectedValue = e.target.value;
                                                               console.log(selectedValue)
-                                                              dropHandler(e)
-                                                              {FilterDataCopy()}
+                                                              setCamera(e.target.value)
+                                                            //   dropHandler(e)
+                                                              //{FilterDataCopy()}
 
                                                             }
                                                         }
@@ -229,40 +276,41 @@ const AddPrdouctPage = (props) => {
                                         </div>
                                         <div className="Field-group mb-3">
                                         <p>SubCategory*</p>
-
-                                        {/* {Object.values(SubCategory).map((item, i) => (
-                                                        <select key={item} 
+ 
+      
+                                       
+                          
+                                          {Object.entries(SubCategory).map((item, i) => (
+                                                        <select key={items} 
                                                         {...register('subcategory')}
                                                         className="form-control"
                                                         placeholder="SuCategory" >
                                                             
                                                             {
                                                             
-                                                            SubCategory[i].map((c,i) =>{
+                                                            SubCategory[i].map((c,ix) =>{
                                                                 let clen = c.subcategory.length;
-                                                                for (let index = 0; index < clen; index++) {
+                                                                for (let index = ix; index <=clen; index++) {
                                                                     const element = c.subcategory;
                                                                      console.log(index,clen, element[index])
                                                                      
                                                             return (
                                                             <> 
-                                                                <option key={index}  value={element}>{element}</option>
+                                                                <option key={element} value={element}>{element}</option>
                                                             </> )
-                                                            }}
+                                                            }
+                                                        }
                                                             )}
                                                           
 
                                                         </select>
-                                                ))} */}
+                                                ))} 
+                                            
                                                
-                                               <input
-                                                {...register('subcategory', {
-                                                    required: true
-                                                })}
-                                          
-                                                className="form-control"
-                                                placeholder="Sub Category"
-                                            />
+                                           
+
+
+
                                         </div>
                                        
                                         <div className="Field-group mb-3">
@@ -313,7 +361,8 @@ const AddPrdouctPage = (props) => {
                                                 placeholder="quantity"
                                             />
                                         </div>
-                                     
+  
+                                 
                                         <div className="row">
                                             <div className="col-12">
                                                 <button
@@ -324,6 +373,7 @@ const AddPrdouctPage = (props) => {
                                                 </button>
                                             </div>
                                         </div>
+
           
                                     </form>
                                 </div>

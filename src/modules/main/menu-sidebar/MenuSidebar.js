@@ -60,15 +60,37 @@ const MenuSidebar = ({user}) => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink to="/adminPage" exact className="nav-link">
+                                <i className="nav-icon fas fa-user-shield" />
+                                <p>{t('menusidebar.label.admin')}</p>
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink to="/users" exact className="nav-link">
                                 <i className="nav-icon fas fa-users" />
                                 <p>{t('menusidebar.label.user')}</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/adminPage" exact className="nav-link">
-                                <i className="nav-icon fas fa-user-shield" />
-                                <p>{t('menusidebar.label.admin')}</p>
+                            <NavLink to="/slider" exact className="nav-link">
+                                <i className="nav-icon fas fa-images" />
+                                <p>{t('menusidebar.label.slider')}</p>
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/Adds" exact className="nav-link">
+                                <i className="nav-icon fal fa-images" />
+                                <p>{t('menusidebar.label.Adds')}</p>
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink
+                                to="/categoriesPage"
+                                exact
+                                className="nav-link"
+                            >
+                                <i className="nav-icon fas fa-cubes" />
+                                <p>{t('menusidebar.label.category')}</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
@@ -97,28 +119,6 @@ const MenuSidebar = ({user}) => {
                             >
                                 <i className="nav-icon fas fa-bell" />
                                 <p>{t('menusidebar.label.notifications')}</p>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to="/slider" exact className="nav-link">
-                                <i className="nav-icon fas fa-images" />
-                                <p>{t('menusidebar.label.slider')}</p>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to="/Adds" exact className="nav-link">
-                                <i className="nav-icon fal fa-images" />
-                                <p>{t('menusidebar.label.Adds')}</p>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                to="/categoriesPage"
-                                exact
-                                className="nav-link"
-                            >
-                                <i className="nav-icon fas fa-cubes" />
-                                <p>{t('menusidebar.label.category')}</p>
                             </NavLink>
                         </li>
                     </ul>
