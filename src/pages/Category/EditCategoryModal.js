@@ -53,7 +53,7 @@ const EditCategoryModal = (props) => {
             .then((res) => {
                 console.log(res.data);
                 toast.success(`category updated sucessfully !`);
-                
+                refreshPage()
             })
             .catch((error) => {
                 console.log('Error');
