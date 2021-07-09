@@ -39,8 +39,8 @@ const AddPrdouctPage = (props) => {
    const [FilteredSubCat, setFilteredSubCat] = useState([])
    const [FiltredSubLen, setFiltredSubLen] = useState('')
 
-   const [nume, setNume] = useState('')
-   const [camera, setCamera] = useState('')
+   
+   const [selectedCategoryFromDropDown, setselectedCategoryFromDropDown] = useState('')
 
    let finalArray = []
    const numbers = [1, 2, 3, 4, 5];
@@ -56,45 +56,39 @@ const AddPrdouctPage = (props) => {
 
 
    const MakeItem = function(value) {
-        return <option key={value} value={value}>{value}</option>;
+        return(<>
+             <option key={value} value={value}>{value}</option>
+             </>);
     };
 
-  const FilterDataCopy = () => {
-    for (let index = 0; index < SubCategoryLength; index++) {
-        const element =  SubCategoriesFound[index];
-        console.log("element is",element)
-        //  items.push(<option vlaue={element} key={index}>{element}</option>)
-          items.push(element)
-      
-    }
-      }
+ 
       useEffect(() => {
        
-        axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${camera}`)
+        axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${selectedCategoryFromDropDown}`)
         .then(res => {
-            //console.log("c",res.data.SubCategories[0])
-            //SubCategoriesFound is an array
 
-            const c = res.data.SubCategories[0]
-            SubCategoriesFound =res.data.SubCategories[0]
+            // //SubCategoriesFound is an array
+
+            // const c = res.data.SubCategories[0]
+            // SubCategoriesFound =res.data.SubCategories[0]
             
-            SubCategoryLength = SubCategoriesFound.length
+            // SubCategoryLength = SubCategoriesFound.length
 
-            console.log("c",c)
-            console.log("cz",SubCategoriesFound)
-            console.log("czlen", SubCategoryLength)
+            // console.log("c",c)
+            // console.log("cz",SubCategoriesFound)
+            // console.log("czlen", SubCategoryLength)
     
              
-            const objectArray =  Object.entries(SubCategoriesFound[0]);
+            // const objectArray =  Object.entries(SubCategoriesFound[0]);
     
-            objectArray.forEach(async ([key, value]) => {
-            console.log("key is h:",key); // 'one'
-            const subArry = value;
-             SubCategoryObjectValues = subArry
+            // objectArray.forEach(async ([key, value]) => {
+            // console.log("key is h:",key); // 'one'
+            // const subArry = value;
+            //  SubCategoryObjectValues = subArry
             
-            console.log("values k:",SubCategoryObjectValues); // 1
+            // console.log("values k:",SubCategoryObjectValues); // 1
             
-            });
+            // });
 
 
           //FilterDataCopy()
@@ -105,7 +99,7 @@ const AddPrdouctPage = (props) => {
 
 
             setSubCategory(res.data.SubCategories)
-            let subs ;
+            //let subs ;
             //console.log(res.data)
 
             //console.log("gggg",SubCategory)
@@ -135,8 +129,8 @@ const AddPrdouctPage = (props) => {
             console.error(err); 
         })
         // do stuff
-        console.log("cccccc",camera);
-    }, [camera]);
+        //console.log("cccccc",selectedCategoryFromDropDown);
+    }, [selectedCategoryFromDropDown]);
     
    useEffect(() => {
        
@@ -152,90 +146,90 @@ const AddPrdouctPage = (props) => {
         }, [])
         let text = "<ul>";
 
-        const myFunction  = async (value, index, array) => {
-            //<p key={index}>hello{value}, {array[index]}</p>
-            //superText += value ; 
-            //txt += "<li>" + value + "</li>";
-            // let fLen = array.length;
-            let z = Object.values(popArray) 
-            superText+= "<li>" + value + "</li>"
-            superArray.push(value)
+        // const myFunction  = async (value, index, array) => {
+        //     //<p key={index}>hello{value}, {array[index]}</p>
+        //     //superText += value ; 
+        //     //txt += "<li>" + value + "</li>";
+        //     // let fLen = array.length;
+        //     let z = Object.values(popArray) 
+        //     superText+= "<li>" + value + "</li>"
+        //     superArray.push(value)
            
          
-            // let newz = popArray[0]
-            // let zlen = await newz;
+        //     // let newz = popArray[0]
+        //     // let zlen = await newz;
 
-            // console.log("object values",newz)
-            // console.log("type is newz",typeof newz);
-            // console.log("new z length :",fLen)
-            // console.log("type is z",typeof z);
+        //     // console.log("object values",newz)
+        //     // console.log("type is newz",typeof newz);
+        //     // console.log("new z length :",fLen)
+        //     // console.log("type is z",typeof z);
              
-            console.log("type of numbers", typeof numbers)
+        //     console.log("type of numbers", typeof numbers)
 
-            z.forEach((element) => {
+        //     z.forEach((element) => {
 
-               // txt += element[index] + "<br>"; 
+        //        // txt += element[index] + "<br>"; 
  
-                  console.log("ghh",element)
+        //           console.log("ghh",element)
 
-                  document.getElementById("demo").innerHTML = element ;
-                  console.log("element is",element)
-                  items.push(<p key={index}>{element}</p>)
-                 items.push(element)
-                 console.log(typeof items)
+        //           document.getElementById("demo").innerHTML = element ;
+        //           console.log("element is",element)
+        //           items.push(<p key={index}>{element}</p>)
+        //          items.push(element)
+        //          console.log(typeof items)
               
-            });
+        //     });
           
            
 
      
-          }
-          text += "</ul>";
+        //   }
+        //   text += "</ul>";
 
 
-        useEffect(() => {
-        //    console.log("finalArray mount",finalArray)
-        //    console.log("type is",typeof numbers);
-           console.log("type is",typeof popArray);
+        // useEffect(() => {
+        // //    console.log("finalArray mount",finalArray)
+        // //    console.log("type is",typeof numbers);
+        //    console.log("type is",typeof popArray);
 
 
 
-           popArray.forEach(myFunction);
-           text = superText;
-           //console.log("text",text)
-        }, [finalArray])
+        //    popArray.forEach(myFunction);
+        //    text = superText;
+        //    //console.log("text",text)
+        // }, [finalArray])
 
-  const subData = async () => {
-    axios.get(`http://localhost:8001/api/admin/getSubs?CId=mobiles`)
-    .then(async(res) => {
-        let subs ;
-        console.log(res.data)
-        const result = await Object.values(res.data.SubCategories);
-        await setSubCategory(result)
+//   const subData = async () => {
+//     axios.get(`http://localhost:8001/api/admin/getSubs?CId=mobiles`)
+//     .then(async(res) => {
+//         let subs ;
+//         console.log(res.data)
+//         const result = await Object.values(res.data.SubCategories);
+//         await setSubCategory(result)
          
-        subs = await res.data.SubCategories
+//         subs = await res.data.SubCategories
 
 
-        const objectArray = await Object.entries(SubCategory[0]);
+//         const objectArray = await Object.entries(SubCategory[0]);
 
-        objectArray.forEach(async ([key, value]) => {
-        console.log("key:",key); // 'one'
-        const subArry = value.subcategory;
-        await setFilteredSubCat(subArry)
-        const subArryLen = subArry.length;
+//         objectArray.forEach(async ([key, value]) => {
+//         console.log("key:",key); // 'one'
+//         const subArry = value.subcategory;
+//         await setFilteredSubCat(subArry)
+//         const subArryLen = subArry.length;
         
-        await setFiltredSubLen(subArryLen)
-        console.log("values:",FilteredSubCat, FiltredSubLen); // 1
+//         await setFiltredSubLen(subArryLen)
+//         console.log("values:",FilteredSubCat, FiltredSubLen); // 1
         
-        });
+//         });
 
      
             
-            })
-            .catch(err => {
-                console.error(err);
-            })
-  }
+//             })
+//             .catch(err => {
+//                 console.error(err);
+//             })
+//   }
 
 //    const dropHandler = async (e) => {
     
@@ -322,7 +316,7 @@ const AddPrdouctPage = (props) => {
                                                         onChange={(e)=> {
                                                              selectedValue = e.target.value;
                                                               console.log(selectedValue)
-                                                              setCamera(e.target.value)
+                                                              setselectedCategoryFromDropDown(e.target.value)
                                                             //   dropHandler(e)
                                                               //{FilterDataCopy()}
 
@@ -345,10 +339,12 @@ const AddPrdouctPage = (props) => {
                                        
                           
                                           {Object.entries(SubCategory).map((item, i) => (
-                                                        <ul key={items} 
-                                                        {...register('subcategory')}
+                                                        <select key={items} 
+                                                        {...register('subcategory', {
+                                                            required: true
+                                                        })}
                                                         className="form-control"
-                                                        placeholder="SuCategory" >
+                                                        placeholder="subcategory" >
                                                             
                                                             {
                                                             
@@ -358,35 +354,23 @@ const AddPrdouctPage = (props) => {
                                                                 for (let index = ix; index <clen; index++) {
                                                                     const element = c.subcategory;
                                                                      console.log(index,clen, element[index])
-                                                                     // Returns "Mango"
+
                                                                      finalArray.push(element[index])
-                                                                //    const z=  finalArray.pop();   
-                                                                //    popArray.push(z)
-                                                                //      console.log("fff:",z)
-                                                                //      console.log("poparry length",popArray.length)
-                                                                //      console.log("fffj:",finalArray)
-                                                                //        console.log(" final length", finalArray.length)
-
-
-                                                            // return (
-                                                            // <> 
-                                                            //     <li key={element} value={element}>{element}</li>
-                                                            // </> )
-                                                             
-
                                                          
                                                             }
+
+
                                                         }
                                                             )}
                                                           
 
-                                     
+                                                {finalArray.map(MakeItem)}
    
-                                                        </ul>
+                                                        </select>
                                                 ))} 
                                             
                                               
-                                  
+
 
                                         </div>
                                        
@@ -431,13 +415,6 @@ const AddPrdouctPage = (props) => {
                                         <div className="Field-group mb-3">
                                         <p>Qunatity*</p>
                                          
-                                        
-
-                                        
-                                        <li id="demo" key={superText}>{superText}</li>
-                                        
-                                        <select>{finalArray.map(MakeItem)}</select>
-
 
                                             <input
                                                 {...register('quantity', {
