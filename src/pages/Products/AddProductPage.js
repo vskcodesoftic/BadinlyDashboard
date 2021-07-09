@@ -61,7 +61,7 @@ const AddPrdouctPage = (props) => {
              </>);
     };
 
- 
+ //useedddj
       useEffect(() => {
        
         axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${selectedCategoryFromDropDown}`)
