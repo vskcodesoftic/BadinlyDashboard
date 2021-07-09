@@ -26,6 +26,7 @@ const AddPrdouctPage = (props) => {
     let SubCategoriesFound = []
     let SubCategoryObjectValues = []
     let SubCategoryLength 
+     let superText;
 
     let selectedValue;
    const [Category, setCategory] = useState([])
@@ -41,11 +42,22 @@ const AddPrdouctPage = (props) => {
    const [nume, setNume] = useState('')
    const [camera, setCamera] = useState('')
 
+   let finalArray = []
+   const numbers = [1, 2, 3, 4, 5];
+   let popArray = []
 
+   
+   let superArray =[]
 
     const api = axios.create({
         baseURL: `https://badilnyint.com/`
     });
+
+
+
+   const MakeItem = function(value) {
+        return <option key={value} value={value}>{value}</option>;
+    };
 
   const FilterDataCopy = () => {
     for (let index = 0; index < SubCategoryLength; index++) {
@@ -57,7 +69,7 @@ const AddPrdouctPage = (props) => {
     }
       }
       useEffect(() => {
-
+       
         axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${camera}`)
         .then(res => {
             //console.log("c",res.data.SubCategories[0])
@@ -85,7 +97,7 @@ const AddPrdouctPage = (props) => {
             });
 
 
-          FilterDataCopy()
+          //FilterDataCopy()
 
 
 
@@ -138,8 +150,60 @@ const AddPrdouctPage = (props) => {
     })
             
         }, [])
+        let text = "<ul>";
+
+        const myFunction  = async (value, index, array) => {
+            //<p key={index}>hello{value}, {array[index]}</p>
+            //superText += value ; 
+            //txt += "<li>" + value + "</li>";
+            // let fLen = array.length;
+            let z = Object.values(popArray) 
+            superText+= "<li>" + value + "</li>"
+            superArray.push(value)
+           
+         
+            // let newz = popArray[0]
+            // let zlen = await newz;
+
+            // console.log("object values",newz)
+            // console.log("type is newz",typeof newz);
+            // console.log("new z length :",fLen)
+            // console.log("type is z",typeof z);
+             
+            console.log("type of numbers", typeof numbers)
+
+            z.forEach((element) => {
+
+               // txt += element[index] + "<br>"; 
+ 
+                  console.log("ghh",element)
+
+                  document.getElementById("demo").innerHTML = element ;
+                  console.log("element is",element)
+                  items.push(<p key={index}>{element}</p>)
+                 items.push(element)
+                 console.log(typeof items)
+              
+            });
+          
+           
+
+     
+          }
+          text += "</ul>";
 
 
+        useEffect(() => {
+        //    console.log("finalArray mount",finalArray)
+        //    console.log("type is",typeof numbers);
+           console.log("type is",typeof popArray);
+
+
+
+           popArray.forEach(myFunction);
+           text = superText;
+           //console.log("text",text)
+        }, [finalArray])
 
   const subData = async () => {
     axios.get(`http://localhost:8001/api/admin/getSubs?CId=mobiles`)
@@ -281,35 +345,48 @@ const AddPrdouctPage = (props) => {
                                        
                           
                                           {Object.entries(SubCategory).map((item, i) => (
-                                                        <select key={items} 
+                                                        <ul key={items} 
                                                         {...register('subcategory')}
                                                         className="form-control"
                                                         placeholder="SuCategory" >
                                                             
                                                             {
                                                             
+                                                            
                                                             SubCategory[i].map((c,ix) =>{
                                                                 let clen = c.subcategory.length;
-                                                                for (let index = ix; index <=clen; index++) {
+                                                                for (let index = ix; index <clen; index++) {
                                                                     const element = c.subcategory;
                                                                      console.log(index,clen, element[index])
-                                                                     
-                                                            return (
-                                                            <> 
-                                                                <option key={element} value={element}>{element}</option>
-                                                            </> )
+                                                                     // Returns "Mango"
+                                                                     finalArray.push(element[index])
+                                                                //    const z=  finalArray.pop();   
+                                                                //    popArray.push(z)
+                                                                //      console.log("fff:",z)
+                                                                //      console.log("poparry length",popArray.length)
+                                                                //      console.log("fffj:",finalArray)
+                                                                //        console.log(" final length", finalArray.length)
+
+
+                                                            // return (
+                                                            // <> 
+                                                            //     <li key={element} value={element}>{element}</li>
+                                                            // </> )
+                                                             
+
+                                                         
                                                             }
                                                         }
                                                             )}
                                                           
 
-                                                        </select>
+                                     
+   
+                                                        </ul>
                                                 ))} 
                                             
-                                               
-                                           
-
-
+                                              
+                                  
 
                                         </div>
                                        
@@ -353,6 +430,15 @@ const AddPrdouctPage = (props) => {
                                         </div>
                                         <div className="Field-group mb-3">
                                         <p>Qunatity*</p>
+                                         
+                                        
+
+                                        
+                                        <li id="demo" key={superText}>{superText}</li>
+                                        
+                                        <select>{finalArray.map(MakeItem)}</select>
+
+
                                             <input
                                                 {...register('quantity', {
                                                     required: true
@@ -373,7 +459,8 @@ const AddPrdouctPage = (props) => {
                                                 </button>
                                             </div>
                                         </div>
-
+                        
+                        
           
                                     </form>
                                 </div>
