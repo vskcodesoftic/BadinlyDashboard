@@ -44,10 +44,7 @@ const AddPrdouctPage = (props) => {
 
    let finalArray = []
    const numbers = [1, 2, 3, 4, 5];
-   let popArray = []
-
-   
-   let superArray =[]
+  
 
     const api = axios.create({
         baseURL: `https://badilnyint.com/`
@@ -136,8 +133,25 @@ const AddPrdouctPage = (props) => {
        
     axios.get('https://badilnyint.com/api/admin/getCats')
     .then(res => {
-        console.log(res.data.Categories)
+        //console.log("cats",res.data.Categories[0])
+        
+        const cats = res.data.Categories
+
+        
+         const objectArray =  Object.entries(cats[0]);
+        
+         const intialCategory = objectArray[0]
+          
+       const intialValues =  Object.values(intialCategory)
+      
+       const intialDropdownValue = intialValues[1].category
+
+       //console.log("intial selected values", intialDropdownValue)
+
         setCategory(res.data.Categories)
+
+
+       setselectedCategoryFromDropDown(intialDropdownValue)
     })
     .catch(err => {
         console.error(err); 
