@@ -158,7 +158,6 @@ const AddPrdouctPage = (props) => {
     })
             
         }, [])
-        let text = "<ul>";
 
         // const myFunction  = async (value, index, array) => {
         //     //<p key={index}>hello{value}, {array[index]}</p>
@@ -198,7 +197,6 @@ const AddPrdouctPage = (props) => {
 
      
         //   }
-        //   text += "</ul>";
 
 
         // useEffect(() => {
