@@ -9,9 +9,6 @@ import axios from 'axios';
 
 
 
-const refreshPage = ()=>{
-    window.location.reload();
- }
 
 
 const EditProdutModal = (props) => {
@@ -23,11 +20,36 @@ const EditProdutModal = (props) => {
             status: `${status}`,
             quantity :`${quantity}`,
             category: `${category}`,
-            subcategory: `${subcategory}`,
+           // subcategory: `${subcategory}`,
             image : `${image}`,
             isShow : `${isShow}`
         }
     });
+
+
+    const items = []
+    let SubCategoriesFound = []
+    let SubCategoryObjectValues = []
+    let SubCategoryLength 
+     let superText;
+
+    let selectedValue;
+   const [Category, setCategory] = useState([])
+   const [QueryCategory , SetQueryCategory] = useState([])
+   const [SubCategory, setSubCategory] = useState([])
+    const [Spinner, setSpinner] = useState(false);
+
+    const [redirect, setredirect] = useState(false)
+
+   const [FilteredSubCat, setFilteredSubCat] = useState([])
+   const [FiltredSubLen, setFiltredSubLen] = useState('')
+
+   
+   const [selectedCategoryFromDropDown, setselectedCategoryFromDropDown] = useState('')
+
+   let finalArray = []
+   const numbers = [1, 2, 3, 4, 5];
+  
     const [ImageValue, setImageValue] = useState('');
     const [spinner, setspinner] = useState(false)
     const [t] = useTranslation();
@@ -38,6 +60,68 @@ const EditProdutModal = (props) => {
      
     const [Data, setData] = useState('');
     
+
+
+    const MakeItem = function(value) {
+        return(<>
+             <option key={value} value={value}>{value}</option>
+             </>);
+    };
+
+    console.log("subcs",subcategory)
+
+ 
+    useEffect(() => {
+        axios.get('https://badilnyint.com/api/admin/getCats')
+        .then(res => {
+            //console.log("cats",res.data.Categories[0])
+            
+            const cats = res.data.Categories
+    
+            
+             const objectArray =  Object.entries(cats[0]);
+            
+             const intialCategory = objectArray[0]
+              
+           const intialValues =  Object.values(intialCategory)
+          
+           const intialDropdownValue = intialValues[1].category
+    
+           console.log("intial selected values", intialDropdownValue)
+    
+            setCategory(res.data.Categories)
+    
+    
+           setselectedCategoryFromDropDown(category)
+        })
+        .catch(err => {
+            console.error(err); 
+        })
+                
+            }, [])
+    
+ //useedddjvvjvv
+      useEffect(() => {
+       
+        axios.get(`https://badilnyint.com/api/admin/getSubs?CId=${selectedCategoryFromDropDown}`)
+        .then(res => {
+            setSubCategory(res.data.SubCategories)
+                })
+    
+        .catch(err => {
+            console.error(err); 
+        })
+     
+    }, [selectedCategoryFromDropDown]);
+    
+ 
+       
+ //useedddjvvjvv
+
+
+
+
+     console.log(Category)
 
     const onSubmit = (data) => {
         // still to resolve promise
@@ -73,7 +157,9 @@ const EditProdutModal = (props) => {
                 toast.error(`something went wrong`);
             });
     };
-
+    if (redirect) {
+        return <Redirect to='/products'/>;
+      }
     return (
         <div>
             <div>
@@ -102,26 +188,72 @@ const EditProdutModal = (props) => {
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
-                                <p>Category</p>
-                                    <input
-                                        {...register('category', {
-                                            required: true
-                                        })}
-                                        className="form-control"
-                                        placeholder={category}
-                                    />
-                                </div>
-                                <div className="Field-group mb-3">
-                                <p>SubCategory</p>
-                                    <input
-                                        {...register('subcategory', {
-                                            required: true
-                                        })}
-                                        className="form-control"
-                                        placeholder={subcategory}
-                                    />
-                                </div>
-                                <div className="Field-group mb-3">
+                                        <p>Category*</p>
+                                              { Object.keys(Category).map((item, i) => (
+                                                        <select key={i} 
+                                                        {...register('category')}
+                                                        className="form-control"
+                                                        onChange={(e)=> {
+                                                             selectedValue = e.target.value;
+                                                              console.log(selectedValue)
+                                                              setselectedCategoryFromDropDown(e.target.value)
+                                                            //   dropHandler(e)
+                                                              //{FilterDataCopy()}
+
+                                                            }
+                                                        }
+                                                        className="form-control"
+                                                        placeholder="Category" >
+                                                            {Category[i].map((c,i) =>
+                                                            <>
+                                                                <option key={i} value={c.category}>{c.category}</option>
+                                                            </>
+                                                            )}
+                                                        </select>
+                                                ))}
+                                        </div>
+                                        <div className="Field-group mb-3">
+                                        <p>SubCategory*</p>
+ 
+      
+                                       
+                          
+                                          {Object.entries(SubCategory).map((item, i) => (
+                                                        <select key={items} 
+                                                        {...register('subcategory', {
+                                                            required: true
+                                                        })}
+                                                        className="form-control"
+                                                        placeholder="subcategory" >
+                                                            
+                                                            {
+                                                            
+                                                            
+                                                            SubCategory[i].map((c,ix) =>{
+                                                                let clen = c.subcategory.length;
+                                                                for (let index = ix; index <clen; index++) {
+                                                                    const element = c.subcategory;
+                                                                     console.log(index,clen, element[index])
+
+                                                                     finalArray.push(element[index])
+                                                         
+                                                            }
+
+
+                                                        }
+                                                            )}
+                                                          
+
+                                                {finalArray.map(MakeItem)}
+   
+                                                        </select>
+                                                ))} 
+                                            
+                                              
+
+
+                                        </div>
+                                       <div className="Field-group mb-3">
                                 <p>Image*</p>
                                     <input
                                        required

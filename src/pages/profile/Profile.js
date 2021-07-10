@@ -6,6 +6,7 @@ import {Button} from '@components';
 import ActivityTab from './ActivityTab';
 import TimelineTab from './TimelineTab';
 import SettingsTab from './SettingsTab';
+import ChangePassword from '@app/pages/ChangePassword/ChangePassword';
 
 export const GetCurrentUser = () => {
     const C = JSON.parse(localStorage.getItem('user'));
@@ -44,7 +45,7 @@ const Profile = () => {
             <section className="content">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <div className="card card-primary card-outline">
                                 <div className="card-body box-profile">
                                     <div className="text-center">
@@ -57,13 +58,19 @@ const Profile = () => {
                                     <h3 className="profile-username text-center">
                                         {GetCurrentUser().email}
                                     </h3>
-                                    <p className="text-muted text-center">
-                                        {GetCurrentUser().userId}
-                                    </p>
+                                    <Link to="/changePassword">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary btn-block"
+                                >
+                                    Change Password
+                                </button>
+                               </Link>
                                 </div>
                                 {/* /.card-body */}
                             </div>
                         </div>
+            
                     </div>
                 </div>
             </section>

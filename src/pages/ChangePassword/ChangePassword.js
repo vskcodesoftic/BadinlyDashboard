@@ -1,112 +1,120 @@
 /* eslint-disable */
-
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
+import Loader from "react-js-loader";
+import {Formik, Field, Form} from 'formik';
+import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
+import axios from 'axios';
 
-const ChangePassword = () => {
+
+
+const refreshPage = ()=>{
+    window.location.reload();
+ }
+
+
+const ChangePasswordPage = (props) => {
+    // const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
+    const {register, handleSubmit} = useForm();
+    const [ImageValue, setImageValue] = useState('');
+    const [spinner, setspinner] = useState(false)
     const [t] = useTranslation();
-    let emailInput = null;
-    let oldpasswordInput = null;
-    let newpasswordInput = null;
+    const fileInput = React.createRef('');
+    const [FileInupt, setFileInupt] = useState('')
+     
+    
+     
+    const [Data, setData] = useState('');
+    
 
-    const setEmailInputRef = (element) => {
-        emailInput = element;
-    };
-
-    const requestNewPassword = (event) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('email', emailInput);
-        formData.append('oldpassword', this.state.description);
-        formData.append('oldpassword', this.state.title);
-
+    const onSubmit = (data) => {
         // still to resolve promise
+      
+        const fd = new FormData();
+       
+
+      
+        setspinner(true)
+
         axios
-            .post('https://badilnyint.com/api/admin/adds/addImages', formData)
+            .post("https://https://badilnyint.com/api/admin/changePassword", data)
             .then((res) => {
                 console.log(res.data);
-                toast.success(`image uploaded  sucessfully !`);
+                toast.success(`Password updated sucessfully !`);
+                setspinner(false)
+                refreshPage()
             })
             .catch((error) => {
-                console.log('Error');
-                toast.error(`something went wrong`);
+                console.log('Error',error);
+                toast.error(`something went wrong, could not update password`);
+                setspinner(false)
+
             });
     };
 
     return (
-        <>
-            <section className="content-header">
-                <div className="container-fluid">
-                    <div>
-                        <div className="login-box">
-                            <div className="card card-outline card-primary">
-                                <div className="card-body">
-                                    <p className="login-box-msg">
-                                        {t('recover.forgotYourPassword')}
-                                    </p>
-                                    <form onSubmit={requestNewPassword}>
-                                        <div className="input-group mb-3">
-                                            <input
-                                                ref={setEmailInputRef}
-                                                type="email"
-                                                className="form-control"
-                                                placeholder="Email"
-                                            />
-                                            <div className="input-group-append">
-                                                <div className="input-group-text">
-                                                    <span className="fas fa-envelope" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="input-group mb-3">
-                                            <input
-                                                ref={setEmailInputRef}
-                                                type="email"
-                                                className="form-control"
-                                                placeholder="Old Password"
-                                            />
-                                            <div className="input-group-append">
-                                                <div className="input-group-text">
-                                                    <span className="fas fa-lock" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="input-group mb-3">
-                                            <input
-                                                ref={setEmailInputRef}
-                                                type="email"
-                                                className="form-control"
-                                                placeholder="New Password"
-                                            />
-                                            <div className="input-group-append">
-                                                <div className="input-group-text">
-                                                    <span className="fas fa-lock" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary btn-block"
-                                                >
-                                                    {t(
-                                                        'recover.requestNewPassword'
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
+        <div>
+            <div>
+                <div className="login-box">
+                    <div className="card card-outline card-primary">
+                        <div className="card-body">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="Field-group mb-3">    
+                                <p>Email *</p>
+                                    <input
+                                    type="email"
+                                        {...register('email', {
+                                            required: true
+                                        })}
+                                        className="form-control"
+                                    />
                                 </div>
-                            </div>
+                                <div className="Field-group mb-3">
+                                <p>Old Password*</p>
+                                    <input
+                                    type="password"
+                                        {...register('oldpassword', {
+                                            required: true
+                                        })}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="Field-group mb-3">
+                                <p>New Password*</p>
+                                    <input
+                                    type="password"
+                                        {...register('newpassword', {
+                                            required: true
+                                        })}
+                                        className="form-control"
+                                    />
+                                </div>
+                                
+    
+                                <div className="row">
+                                    <div className="col-12">
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary btn-block"
+                                        >
+                                            ChangePassword
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            {spinner ? ( 
+                                        <Loader type="bubble-top"
+                                        className="mt-5"
+                                        bgColor={"#000000"}
+                                            title={"...loading"} size={100} /> 
+                                            ) : null }
                         </div>
                     </div>
                 </div>
-            </section>
-        </>
+            </div>
+        </div>
     );
 };
 
-export default ChangePassword;
+export default ChangePasswordPage;

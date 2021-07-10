@@ -65,6 +65,7 @@ const DataTable = () => {
             lookup: {active: 'active', inactive: 'inactive', blocked: 'blocked'}
         },
         {title: 'phoneNumber', field: 'phoneNumber'}
+
     ];
     const [data, setData] = useState([]); // table data
 
