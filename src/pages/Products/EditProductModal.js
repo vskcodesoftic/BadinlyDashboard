@@ -9,7 +9,9 @@ import axios from 'axios';
 
 
 
-
+const refreshPage = ()=>{
+    window.location.reload();
+ }
 
 const EditProdutModal = (props) => {
     const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
@@ -154,7 +156,6 @@ const EditProdutModal = (props) => {
             })
             .catch((error) => {
                 console.log('Error');
-                toast.error(`something went wrong`);
             });
     };
     if (redirect) {
@@ -323,7 +324,7 @@ const EditProdutModal = (props) => {
                                             type="submit"
                                             className="btn btn-primary btn-block"
                                         >
-                                            {t('product.addProduct')}
+                                            Update Product
                                         </button>
                                     </div>
                                 </div>

@@ -23,7 +23,7 @@ const ChangePasswordPage = (props) => {
     const fileInput = React.createRef('');
     const [FileInupt, setFileInupt] = useState('')
      
-    
+     const [Redirect, setRedirect] = useState(false)
      
     const [Data, setData] = useState('');
     
@@ -44,15 +44,21 @@ const ChangePasswordPage = (props) => {
                 toast.success(`Password updated sucessfully !`);
                 setspinner(false)
                 refreshPage()
+                setRedirect(true)
             })
             .catch((error) => {
                 console.log('Error',error);
                 toast.error(`something went wrong, could not update password`);
                 setspinner(false)
+                setRedirect(false)
+
 
             });
     };
 
+    if (Redirect) {
+        return <Redirect to='/'/>;
+      }
     return (
         <div>
             <div>
