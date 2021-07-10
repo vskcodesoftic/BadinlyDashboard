@@ -432,6 +432,7 @@ const AddPrdouctPage = (props) => {
                                                 {...register('quantity', {
                                                     required: true
                                                 })}
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="quantity"
                                             />
