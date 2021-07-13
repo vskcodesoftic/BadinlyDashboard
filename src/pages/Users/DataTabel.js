@@ -64,8 +64,12 @@ const DataTable = () => {
             field: 'status',
             lookup: {active: 'active', inactive: 'inactive', blocked: 'blocked'}
         },
+        {
+            title: 'userType',
+            field: 'userType',
+            lookup: {Customer: 'Customer', Vendor: 'Vendor'}
+        },
         {title: 'phoneNumber', field: 'phoneNumber'}
-
     ];
     const [data, setData] = useState([]); // table data
 
@@ -190,7 +194,8 @@ const DataTable = () => {
                 <div className="col-lg-12 col-12">
                     <MaterialTable
                         options={{
-                            exportButton: true
+                            exportButton: true,
+                            filtering: true
                         }}
                         title="List of Users"
                         columns={columns}

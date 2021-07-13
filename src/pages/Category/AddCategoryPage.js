@@ -69,7 +69,6 @@ const AddCategoryPage = (props) => {
                 console.log(res.data);
 
                 toast.success(`Category uploaded  sucessfully !`);
-            
             })
             .catch((error) => {
                 console.log('Error');

@@ -36,7 +36,7 @@
     },
     "category": {
         "addCategory": "Add Category",
-        "updateCategory" :"Update Category"
+        "updateCategory": "Update Category"
     },
     "main": {
         "label": {
@@ -128,7 +128,8 @@
             "slider": "Slider",
             "Adds": "Advertisement",
             "admin": "Admins",
-            "category": "Categories"
+            "category": "Categories",
+            "trades": "Trades"
         }
     },
     "footer": {

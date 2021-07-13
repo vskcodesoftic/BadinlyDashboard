@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, {Component} from 'react';
-import Loader from "react-js-loader";
-import { Redirect } from "react-router-dom";
+import Loader from 'react-js-loader';
+import {Redirect} from 'react-router-dom';
 
 import axios from 'axios';
 import {toast} from 'react-toastify';
@@ -17,7 +17,6 @@ class ImageUpdate extends Component {
             description: '',
             spinner: false,
             redirect: false
-
         };
     }
     onChange = (e) => {
@@ -43,19 +42,16 @@ class ImageUpdate extends Component {
         formData.append('image', this.state.image);
         formData.append('description', this.state.description);
         formData.append('title', this.state.title);
-          
-        this.setState({spinner : true})
+
+        this.setState({spinner: true});
         // still to resolve promise
         axios
             .post('https://badilnyint.com/api/admin/adds/addImages', formData)
             .then((res) => {
-               
                 console.log(res.data);
                 toast.success(`Advertisement uploaded  sucessfully !`);
-                this.setState({spinner : false})
-                this.setState({ redirect: true })
-
-
+                this.setState({spinner: false});
+                this.setState({redirect: true});
             })
             .catch((error) => {
                 console.log('Error');
@@ -64,15 +60,14 @@ class ImageUpdate extends Component {
     };
 
     render() {
-        const {imageUrl, description, title , redirect} = this.state;
-         
+        const {imageUrl, description, title, redirect} = this.state;
+
         if (redirect) {
-            return <Redirect to='/Adds'/>;
-          }
+            return <Redirect to="/Adds" />;
+        }
 
         return (
             <div className="container">
-               
                 <div className="row justify-content-md-center">
                     <div className="col-12 col-sm-6  form-wrapper">
                         <form onSubmit={this.onSubmit}>
@@ -95,7 +90,9 @@ class ImageUpdate extends Component {
                                         onClick={() => this.refs.image.click()}
                                     ></div>
                                 )}
-                                <b><span>Image*</span></b>
+                                <b>
+                                    <span>Image*</span>
+                                </b>
                                 <input
                                     required
                                     type="file"
@@ -125,7 +122,6 @@ class ImageUpdate extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                          
                                 <button
                                     type="submit"
                                     className="btn btn-primary btn-block"
@@ -133,16 +129,17 @@ class ImageUpdate extends Component {
                                     Upload Advertisement Images
                                 </button>
                             </div>
-                        
                         </form>
 
-                            {this.state.spinner ? ( 
-                      <Loader type="bubble-top"
-                      className="mt-5"
-                       bgColor={"#000000"}
-                        title={"...loading"} size={100} /> 
-                        ) : null }
-                        
+                        {this.state.spinner ? (
+                            <Loader
+                                type="bubble-top"
+                                className="mt-5"
+                                bgColor={'#000000'}
+                                title={'...loading'}
+                                size={100}
+                            />
+                        ) : null}
                     </div>
                 </div>
             </div>

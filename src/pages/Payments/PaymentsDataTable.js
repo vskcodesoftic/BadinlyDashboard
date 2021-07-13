@@ -57,15 +57,24 @@ const api = axios.create({
 const PaymentsDataTable = () => {
     const columns = [
         {title: 'id', field: 'id', hidden: true},
-        {title: 'Result', field: 'Result'},
+        {
+            title: 'Result',
+            field: 'Result',
+            lookup: {CAPTURED: 'CAPTURED', NotCAPTURED: 'not-captured'}
+        },
+        {title: 'planType', field: 'planType'},
+
+        {title: 'Email', field: 'CstEmail'},
+        {title: 'Name', field: 'CstFName'},
+        {title: 'Date', field: 'DateOfSub'},
+
         {title: 'OrderId', field: 'order_id'},
         {title: 'Amount', field: 'total_price'},
         {title: 'PaymentID', field: 'PaymentID'},
         {title: 'Date', field: 'PostDate'},
         {title: 'TrackingId', field: 'TrackingId'},
         {title: 'TranId', field: 'TrackingId'},
-        {title: 'Ref', field: 'TrackingId'},
-        {title: 'PayerId', field: 'creator'}
+        {title: 'Ref', field: 'TrackingId'}
     ];
     const [data, setData] = useState([]); // table data
 

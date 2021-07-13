@@ -3,15 +3,13 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
-import { Redirect } from "react-router-dom";
+import {Redirect} from 'react-router-dom';
 
-import Loader from "react-js-loader";
+import Loader from 'react-js-loader';
 
 import './style.css';
 
-
 class ImageUpdate extends Component {
-    
     constructor(props) {
         super(props);
         this.state = {
@@ -20,12 +18,8 @@ class ImageUpdate extends Component {
             description: '',
             spinner: false,
             redirect: false
-
-
         };
     }
-
-  
 
     onChange = (e) => {
         if (e.target.type === 'file') {
@@ -50,17 +44,16 @@ class ImageUpdate extends Component {
         formData.append('image', this.state.image);
         formData.append('description', this.state.description);
         formData.append('title', this.state.title);
-        this.setState({spinner : true})
+        this.setState({spinner: true});
 
         // still to resolve promise
         axios
             .post('https://badilnyint.com/api/admin/banner/addImages', formData)
             .then((res) => {
                 console.log(res.data);
-                this.setState({spinner : false})
+                this.setState({spinner: false});
                 toast.success(`Slider uploaded  sucessfully !`);
-                this.setState({ redirect: true })
-
+                this.setState({redirect: true});
             })
             .catch((error) => {
                 console.log('Error');
@@ -70,10 +63,10 @@ class ImageUpdate extends Component {
 
     render() {
         const {imageUrl, description, title, redirect} = this.state;
-        
+
         if (redirect) {
-            return <Redirect to='/slider'/>;
-          }
+            return <Redirect to="/slider" />;
+        }
 
         return (
             <div className="container">
@@ -104,19 +97,21 @@ class ImageUpdate extends Component {
                                                     }
                                                 ></div>
                                             )}
-                                            <p><b>Image</b>*</p>
+                                            <p>
+                                                <b>Image</b>*
+                                            </p>
                                             <input
                                                 type="file"
                                                 ref="image"
                                                 onChange={this.onChange}
                                                 className="hidden"
                                                 required
-                                            />                                         
+                                            />
                                         </div>
 
                                         <div className="form-group">
                                             <label className="label ">
-                                            <p>Title*</p>
+                                                <p>Title*</p>
                                             </label>
                                             <input
                                                 name="title"
@@ -124,12 +119,11 @@ class ImageUpdate extends Component {
                                                 onChange={this.onChange}
                                                 className="form-control"
                                                 required
-
                                             />
                                         </div>
                                         <div className="form-group">
                                             <label className="label ">
-                                            <p>Description*</p>
+                                                <p>Description*</p>
                                             </label>
                                             <input
                                                 name="description"
@@ -137,16 +131,18 @@ class ImageUpdate extends Component {
                                                 onChange={this.onChange}
                                                 className="form-control"
                                                 required
-
                                             />
                                         </div>
 
-                                                {this.state.spinner ? ( 
-                                        <Loader type="bubble-top"
-                                        className="mt-5"
-                                        bgColor={"#000000"}
-                                            title={"...loading"} size={100} /> 
-                                            ) : null }
+                                        {this.state.spinner ? (
+                                            <Loader
+                                                type="bubble-top"
+                                                className="mt-5"
+                                                bgColor={'#000000'}
+                                                title={'...loading'}
+                                                size={100}
+                                            />
+                                        ) : null}
                                         <div className="form-group">
                                             <button
                                                 type="submit"

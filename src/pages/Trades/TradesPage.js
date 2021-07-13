@@ -1,31 +1,19 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import ProductsDataTable from './ProductsDataTable';
-import ProductsHeader from './ProductsHeader';
+import TradesDataTable from './TradesDataTable';
+import TradesHeader from './TradesHeader';
 
-const ProductsPage = () => {
+const TradesPage = () => {
     const [t] = useTranslation();
     return (
         <>
             <section className="content-header">
                 <div className="container-fluid">
-                    <ProductsHeader />
-                    <div className="row">
-                        <div className="col-3 m-4">
-                            <Link to="/AddProductPage">
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary btn-block"
-                                >
-                                    {t('product.addProduct')}
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
+                    <TradesHeader />
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1>{t('header.products.title')}</h1>
+                            <h1>{t('header.plans.title')}</h1>
                         </div>
                         <div className="col-sm-6">
                             <ol className="breadcrumb float-sm-right">
@@ -33,13 +21,13 @@ const ProductsPage = () => {
                                     <Link to="/">{t('header.label.home')}</Link>
                                 </li>
                                 <li className="breadcrumb-item active">
-                                    {t('views.products.link')}
+                                    {t('views.plans.link')}
                                 </li>
                             </ol>
                         </div>
                     </div>
                     <div>
-                        <ProductsDataTable />
+                        <TradesDataTable />
                     </div>
                 </div>
             </section>
@@ -47,4 +35,4 @@ const ProductsPage = () => {
     );
 };
 
-export default ProductsPage;
+export default TradesPage;

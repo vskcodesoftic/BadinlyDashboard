@@ -222,8 +222,7 @@ const ProductsDataTable = () => {
     // };
 
     const handleRowDelete = (oldData, resolve) => {
-        const pid = api
-            .delete(`/api/product/${oldData.id}`)
+        api.delete(`/api/product/${oldData.id}`)
             .then((res) => {
                 console.log(oldData.id);
                 const dataDelete = [...data];
@@ -239,6 +238,22 @@ const ProductsDataTable = () => {
             });
     };
 
+    const handleRowSatusUpdate = (oldData, resolve) => {
+        api.delete(`/api/product/${oldData.id}`)
+            .then((res) => {
+                console.log(oldData.id);
+                const dataDelete = [...data];
+                const index = oldData.tableData.id;
+                dataDelete.splice(index, 1);
+                setData([...dataDelete]);
+                resolve();
+            })
+            .catch((error) => {
+                setErrorMessages(['Delete failed! Server error']);
+                setIserror(true);
+                resolve();
+            });
+    };
     return (
         <div className="App">
             <Grid container spacing={2}>
@@ -260,7 +275,9 @@ const ProductsDataTable = () => {
                 <div className="col-lg-12 col-m-6 col-sm-12">
                     <MaterialTable
                         options={{
-                            exportButton: true
+                            exportButton: true,
+                            selection: true,
+                            filtering: true
                         }}
                         title="List of Feautured Products (title,desc are editable)"
                         onRowClick={handleClick}
@@ -281,6 +298,16 @@ const ProductsDataTable = () => {
                                     handleRowDelete(oldData, resolve);
                                 })
                         }}
+                        actions={[
+                            {
+                                tooltip: 'make active all products',
+                                icon: 'delete',
+                                onClick: (evt, data) =>
+                                    alert(
+                                        'You want to delete ' + data.length + ''
+                                    )
+                            }
+                        ]}
                     />
                 </div>
             </div>{' '}

@@ -276,7 +276,6 @@ const AddsDataTable = (props) => {
                         <Button variant="secondary" onClick={handleClose}>
                             Close
                         </Button>
-                       
                     </Modal.Footer>
                 </Modal>
             </>

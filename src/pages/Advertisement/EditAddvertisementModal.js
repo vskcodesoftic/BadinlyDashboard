@@ -5,27 +5,27 @@ import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
 import axios from 'axios';
-import Loader from "react-js-loader";
+import Loader from 'react-js-loader';
 
-const refreshPage = ()=>{
+const refreshPage = () => {
     window.location.reload();
- }
+};
 
 const EditAddvertisementModal = (props) => {
     const {userId, title, description, image} = props;
     const {register, handleSubmit} = useForm({
         defaultValues: {
             userId: `${userId}`,
-            title :`${title}`,
-            description : `${description}`,
-            image : `${image}`
+            title: `${title}`,
+            description: `${description}`,
+            image: `${image}`
         }
     });
     const [ImageValue, setImageValue] = useState('');
     const [t] = useTranslation();
     const fileInput = React.createRef();
     const [Data, setData] = useState([]);
-    const [Spinner, setSpinner] = useState(false)
+    const [Spinner, setSpinner] = useState(false);
     console.log(title);
 
     const onSubmit = (data) => {
@@ -47,15 +47,15 @@ const EditAddvertisementModal = (props) => {
             fileInput.current.files[0].name
         );
 
-        setSpinner(true)
+        setSpinner(true);
 
         axios
             .patch(`https://badilnyint.com/api/admin/adds/a/${userId}`, fd)
             .then((res) => {
                 console.log(res.data);
                 toast.success(`Slider updated sucessfully !`);
-                setSpinner(false)
-                refreshPage()
+                setSpinner(false);
+                refreshPage();
             })
             .catch((error) => {
                 console.log('Error');
@@ -100,7 +100,7 @@ const EditAddvertisementModal = (props) => {
                                     />
                                 </div>
                                 <div className="Field-group mb-3">
-                                <p>Image*</p>
+                                    <p>Image*</p>
 
                                     <input
                                         required
@@ -124,11 +124,14 @@ const EditAddvertisementModal = (props) => {
                                 </div>
 
                                 {Spinner ? (
-                                <Loader type="bubble-top"
+                                    <Loader
+                                        type="bubble-top"
                                         className="mt-5"
-                                        bgColor={"#000000"}
-                                            title={"...loading"} size={100} /> 
-                                            ) : null }
+                                        bgColor={'#000000'}
+                                        title={'...loading'}
+                                        size={100}
+                                    />
+                                ) : null}
                             </form>
                         </div>
                     </div>

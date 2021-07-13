@@ -59,18 +59,17 @@ const Profile = () => {
                                         {GetCurrentUser().email}
                                     </h3>
                                     <Link to="/changePassword">
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary btn-block"
-                                >
-                                    Change Password
-                                </button>
-                               </Link>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary btn-block"
+                                        >
+                                            Change Password
+                                        </button>
+                                    </Link>
                                 </div>
                                 {/* /.card-body */}
                             </div>
                         </div>
-            
                     </div>
                 </div>
             </section>

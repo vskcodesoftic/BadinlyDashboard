@@ -21,10 +21,6 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
-import {Button} from '@app/components/index';
-import EditCategoryModal from './EditCategoryModal';
-import {toast} from 'react-toastify';
-import Modal from 'react-bootstrap/Modal';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -54,65 +50,25 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-const refreshPage = () => {
-    window.location.reload();
-};
-
 const api = axios.create({
-    baseURL: `https://badilnyint.com`
+    baseURL: `http://localhost:8002`
 });
 
-const CategoryDataTable = (props) => {
-    const [show, setShow] = useState(false);
-    const [userID, setUserID] = useState('');
-    const [title, setTitle] = useState('');
-    //description //image
-    const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
-    const [category, setCategory] = useState('');
-    const [subcategory, setSubCategory] = useState('');
-    const [quantity, setquantity] = useState('');
-    const [status, setstatus] = useState('');
-    const [isFeatured, setisFeatured] = useState('');
-    const [isShow, setisShow] = useState('');
-
-    const [value, setValue] = React.useState('');
-    const handleChange = (event) => {
-        console.log(event.target.value.split(','));
-        setValue(event.target.value);
-    };
-
-    const handleClose = () => setShow(false);
-    const handleShow = (e) => {
-        {
-            setUserID(e.id);
-        }
-        {
-            console.log(e.id);
-        }
-        setShow(true);
-    };
-
-    const handleClick = (event, rowData) => {
-        event.preventDefault();
-        console.log(rowData);
-        setUserID(rowData._id);
-        setCategory(rowData.category);
-        setSubCategory(rowData.subcategory);
-
-        setShow(true);
-    };
-    const ImageHandler = (e) => {
-        alert(e);
-    };
-
+const TradesDataTable = () => {
     const columns = [
-        {title: '_id', field: '_id', hidden: true},
+        {title: 'id', field: 'id', hidden: true},
+        {title: 'message', field: 'message'},
 
-        {title: 'category', field: 'category'},
         {
-            title: 'subcategory',
-            field: 'subcategory'
+            title: 'type',
+            field: 'type',
+            lookup: {
+                Confirmed: 'Confirmed',
+                Declined: 'Declined',
+                accepted: 'accepted',
+                tradeRequest: 'tradeRequest',
+                tradeResponse: 'tradeResponse'
+            }
         }
     ];
     const [data, setData] = useState([]); // table data
@@ -122,9 +78,9 @@ const CategoryDataTable = (props) => {
     const [errorMessages, setErrorMessages] = useState([]);
 
     useEffect(() => {
-        api.get('/api/admin/category/getCategory')
+        api.get('/api/trade/getAllTrades')
             .then((res) => {
-                setData(res.data.categories);
+                setData(res.data.trades);
             })
             .catch((error) => {
                 console.log('Error');
@@ -134,30 +90,34 @@ const CategoryDataTable = (props) => {
     const handleRowUpdate = (newData, oldData, resolve) => {
         // validation
         const errorList = [];
-        if (newData.category === '') {
-            errorList.push('Please enter valid category');
+        if (newData.title === undefined) {
+            errorList.push('Please enter title');
         }
-        if (newData.subcategory === '') {
-            errorList.push('Please enter valid subcategory');
+        if (newData.description === undefined) {
+            errorList.push('Please enter desc');
         }
-
+        if (newData.amount === undefined) {
+            errorList.push('Please enter amount');
+        }
+        if (newData.type === undefined) {
+            errorList.push('Please enter type');
+        }
+        if (newData.posts === undefined) {
+            errorList.push('Please enter posts');
+        }
         if (errorList.length < 1) {
-            api.patch(
-                `/api/admin/category/addSubCategory/${newData._id}`,
-                newData
-            )
+            api.patch(`/api/admin/plans/u/${newData.id}`, newData)
                 .then((res) => {
                     const dataUpdate = [...data];
-                    const index = oldData.tableData._id;
+                    const index = oldData.tableData.id;
                     dataUpdate[index] = newData;
                     setData([...dataUpdate]);
                     resolve();
                     setIserror(false);
                     setErrorMessages([]);
-                    toast.success(`Category updated  sucessfully !`);
                 })
                 .catch((error) => {
-                    toast.error(`Category updated  failed !`);
+                    console.log(error);
                     setErrorMessages([`Update failed! Server error${error}`]);
                     setIserror(true);
                     resolve();
@@ -172,16 +132,25 @@ const CategoryDataTable = (props) => {
     const handleRowAdd = (newData, resolve) => {
         // validation
         const errorList = [];
-        if (newData.category === undefined) {
-            errorList.push('Please enter category');
+        if (newData.title === undefined) {
+            errorList.push('Please enter title');
         }
-        if (newData.subcategory === undefined) {
-            errorList.push('Please enter subcategory');
+        if (newData.description === undefined) {
+            errorList.push('Please enter desc');
+        }
+        if (newData.amount === undefined) {
+            errorList.push('Please enter amount');
+        }
+        if (newData.type === undefined) {
+            errorList.push('Please enter type');
+        }
+        if (newData.posts === undefined) {
+            errorList.push('Please enter posts');
         }
 
         if (errorList.length < 1) {
             // no error
-            api.post('/api/admin/category/addCategory', newData)
+            api.post('/api/admin/plans/createPlan', newData)
                 .then((res) => {
                     const dataToAdd = [...data];
                     dataToAdd.push(newData);
@@ -203,17 +172,17 @@ const CategoryDataTable = (props) => {
     };
 
     const handleRowDelete = (oldData, resolve) => {
-        api.delete(`/api/admin/category/${oldData._id}`)
+        api.delete(`/api/admin/plans/${oldData.id}`)
             .then((res) => {
                 console.log(oldData.id);
                 const dataDelete = [...data];
-                const index = oldData.tableData._id;
+                const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
                 setData([...dataDelete]);
                 resolve();
-                refreshPage();
             })
             .catch((error) => {
+                console.log(error);
                 setErrorMessages(['Delete failed! Server error']);
                 setIserror(true);
                 resolve();
@@ -238,53 +207,35 @@ const CategoryDataTable = (props) => {
                 <Grid item />
             </Grid>
             <div className="row">
-                <div className="col-lg-12 col-m-6 col-sm-12">
+                <div className="col-lg-12  col-sm-12 col-md-6">
                     <MaterialTable
                         options={{
-                            exportButton: true
+                            exportButton: true,
+                            filtering: true
                         }}
-                        title="List of Categories"
+                        title="List of Trades"
                         columns={columns}
                         data={data}
                         icons={tableIcons}
-                        onRowClick={handleClick}
-                        editable={{
-                            // onRowUpdate: (newData, oldData) =>
-                            //     new Promise((resolve) => {
-                            //         handleRowUpdate(newData, oldData, resolve);
-                            //     }),
-                            onRowAdd: (newData) =>
-                                new Promise((resolve) => {
-                                    handleRowAdd(newData, resolve);
-                                }),
-                            onRowDelete: (oldData) =>
-                                new Promise((resolve) => {
-                                    handleRowDelete(oldData, resolve);
-                                })
-                        }}
+                        // editable={{
+                        //     onRowUpdate: (newData, oldData) =>
+                        //         new Promise((resolve) => {
+                        //             handleRowUpdate(newData, oldData, resolve);
+                        //         }),
+                        //     onRowAdd: (newData) =>
+                        //         new Promise((resolve) => {
+                        //             handleRowAdd(newData, resolve);
+                        //         }),
+                        //     onRowDelete: (oldData) =>
+                        //         new Promise((resolve) => {
+                        //             handleRowDelete(oldData, resolve);
+                        //         })
+                        // }}
                     />
                 </div>
-
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Update Category</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <EditCategoryModal
-                            userId={userID}
-                            subcategory={subcategory}
-                            category={category}
-                        />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
             </div>
         </div>
     );
 };
 
-export default CategoryDataTable;
+export default TradesDataTable;

@@ -100,6 +100,16 @@ const MenuSidebar = ({user}) => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink
+                                to="/tradesPage"
+                                exact
+                                className="nav-link"
+                            >
+                                <i className="nav-icon fas fa-cart-plus" />
+                                <p>{t('menusidebar.label.trades')}</p>
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink to="/plans" exact className="nav-link">
                                 <i className="nav-icon fas fa-chart-line" />
                                 <p>{t('menusidebar.label.plans')}</p>

@@ -10,6 +10,7 @@ import Users from '@app/pages/Users/Users';
 import ProductsPage from '@app/pages/Products/ProductsPage';
 import AdminsPage from '@app/pages/Admin/AdminPage';
 import AddSliderImage from '@app/pages/Slider/AddSliderImage';
+import TradesPage from '@app/pages/Trades/TradesPage';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import MenuSidebar from './menu-sidebar/MenuSidebar';
@@ -149,6 +150,12 @@ const Main = ({onUserLoad}) => {
                                 exact
                                 path="/AddCategoryPage"
                                 component={AddCategoryPage}
+                            />
+
+                            <Route
+                                exact
+                                path="/TradesPage"
+                                component={TradesPage}
                             />
 
                             <Route exact path="/profile" component={Profile} />
