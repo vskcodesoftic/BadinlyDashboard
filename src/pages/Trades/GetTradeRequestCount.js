@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const GetTradeRequestCount = () => {
     const api = axios.create({
-        baseURL: `http://localhost:8002`
+        baseURL: `https://badilnyint.com`
     });
 
     const [data, setData] = useState([]); // table data

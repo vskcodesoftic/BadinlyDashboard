@@ -62,7 +62,8 @@
             "notifications": "Notifications",
             "slider": "Slider",
             "adds": "advertisement",
-            "admin": "Admins"
+            "admin": "Admins",
+            "trades": "Trades"
         },
         "language": {
             "turkish": "Turkish",
@@ -82,6 +83,9 @@
             "reportsCount": "{{quantity}} new reports",
             "seeAll": "See All Notifications",
             "title": "Notifications"
+        },
+        "trades": {
+            "title": "Trades"
         },
         "user": {
             "changePassword": "Change Password",
@@ -161,10 +165,13 @@
             "link": "Slider Images"
         },
         "Adds": {
-            "link": "Adds "
+            "link": "Advertisement"
         },
         "category": {
             "link": "Categories"
+        },
+        "trades": {
+            "link": "Trades"
         }
     },
     "measurement": {

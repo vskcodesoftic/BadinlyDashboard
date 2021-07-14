@@ -51,7 +51,7 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `http://localhost:8002`
+    baseURL: `https://badilnyint.com`
 });
 
 const TradesDataTable = () => {

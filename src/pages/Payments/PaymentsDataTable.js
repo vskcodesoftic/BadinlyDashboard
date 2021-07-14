@@ -203,6 +203,7 @@ const PaymentsDataTable = () => {
                 <div className="col-lg-12 col-md-8 col-sm-12">
                     <MaterialTable
                         options={{
+                            exportButton: true,
                             filtering: true
                         }}
                         title="List of Payments"

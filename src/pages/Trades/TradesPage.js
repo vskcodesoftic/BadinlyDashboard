@@ -13,7 +13,7 @@ const TradesPage = () => {
                     <TradesHeader />
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1>{t('header.plans.title')}</h1>
+                            <h1>{t('header.trades.title')}</h1>
                         </div>
                         <div className="col-sm-6">
                             <ol className="breadcrumb float-sm-right">
@@ -21,7 +21,7 @@ const TradesPage = () => {
                                     <Link to="/">{t('header.label.home')}</Link>
                                 </li>
                                 <li className="breadcrumb-item active">
-                                    {t('views.plans.link')}
+                                    {t('views.trades.link')}
                                 </li>
                             </ol>
                         </div>
