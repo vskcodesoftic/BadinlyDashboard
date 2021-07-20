@@ -57,13 +57,23 @@ const PushNotification = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <h1>Push Notification</h1>
                 <label htmlFor="Message">message</label>
-                <input {...register('msgToUser')} placeholder="YOUR MESSAGE" />
-
+                <textarea
+                    {...register('msgToUser')}
+                    className="form-control"
+                    placeholder="YOUR MESSAGE"
+                />
                 <div style={{color: 'red'}}>
                     {Object.keys(errors).length > 0 &&
                         'There are errors, check your console.'}
                 </div>
-                <input type="submit" />
+                <div className="col-12">
+                    <button
+                        type="submit"
+                        className="btn btn-primary btn-block mt-3"
+                    >
+                        submit
+                    </button>
+                </div>{' '}
             </form>
         </div>
     );

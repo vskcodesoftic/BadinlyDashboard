@@ -53,9 +53,7 @@ const Dashboard = () => {
             <div className="row">
                 <div className="col-12">
                     <center>
-                        <h4 className="text-center">
-                            مرحبا {GetCurrentUser().email}
-                        </h4>
+                        <h4 className="text-center">مرحبا Admin</h4>
                     </center>
                 </div>
             </div>

@@ -19,7 +19,10 @@ const Footer = () => {
                 <b>{t('footer.version')}</b>
                 <b> </b>
                 <span>
-                    <i className="nav-icon fas fa-heart" />
+                    <i
+                        className="nav-icon  fas fa-heart"
+                        style={{color: 'red'}}
+                    />
                     Kuwait
                 </span>
             </div>
