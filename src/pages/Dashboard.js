@@ -46,9 +46,9 @@ const Dashboard = () => {
                     />
                 </div>
             </div>
-            <div className="row">
-                <div>
-                    <h1>hello</h1>
+            <div className="row ">
+                <div className="">
+                    <h1 className="text-center">Hello </h1>
                 </div>
             </div>
         </div>

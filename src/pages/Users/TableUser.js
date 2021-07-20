@@ -45,7 +45,7 @@ const EmployeeTable = () => {
     useEffect(() => {
         async function loadEmployees() {
             const employeeList = await axios.get(
-                'https://tradeappapi.herokuapp.com/api/product/featuredproducts'
+                'https://badilnyint.com/api/product/featuredproducts'
             );
 
             const employees = employeeList.data.products.map((employee) => {
@@ -59,7 +59,7 @@ const EmployeeTable = () => {
                     nickname: `${employee.nickname}`,
                     photo: (
                         <img
-                            src={`https://tradeappapi.herokuapp.com/${employee.image}`}
+                            src={`https://badilnyint.com/${employee.image}`}
                             alt=""
                         />
                     )

@@ -28,6 +28,13 @@
     "product": {
         "addProduct": "Add Product"
     },
+    "notification": {
+        "sendUserSpecficNotifaction": "Send Notiifcation",
+        "sendVendorSpecficNotifaction": "Send Notiifcation"
+    },
+    "contactus": {
+        "inbox": "Feedback"
+    },
     "slider": {
         "addImage": "Add Slider"
     },
@@ -63,7 +70,8 @@
             "slider": "Slider",
             "adds": "advertisement",
             "admin": "Admins",
-            "trades": "Trades"
+            "trades": "Trades",
+            "contactus": "Infobox"
         },
         "language": {
             "turkish": "Turkish",
@@ -96,7 +104,8 @@
             "title": "Users",
             "notifications": "Notifications",
             "products": "Products",
-            "home": "Home"
+            "home": "Home",
+            "contactus": "Infobox"
         },
         "products": {
             "title": "List of Products"
@@ -118,6 +127,9 @@
         },
         "category": {
             "title": "Categories"
+        },
+        "contactus": {
+            "title": "Infobox"
         }
     },
     "menusidebar": {
@@ -133,7 +145,8 @@
             "Adds": "Advertisement",
             "admin": "Admins",
             "category": "Categories",
-            "trades": "Trades"
+            "trades": "Trades",
+            "contactus": "Infobox"
         }
     },
     "footer": {
@@ -172,6 +185,9 @@
         },
         "trades": {
             "link": "Trades"
+        },
+        "contactus": {
+            "link": "Infobox"
         }
     },
     "measurement": {

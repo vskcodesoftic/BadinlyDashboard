@@ -51,15 +51,21 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `https://badilnyint.com/`
+    baseURL: `https://badilnyint.com`
 });
 
-const AdminsDataTable = () => {
+const PaymentsDataTable = () => {
     const columns = [
         {title: 'id', field: 'id', hidden: true},
-        {title: 'name', field: 'name'},
-        {title: 'email', field: 'email'},
-        {title: 'password', field: 'password'}
+        {
+            title: 'Name',
+            field: 'Name'
+        },
+        {title: 'Number', field: 'Number'},
+
+        {title: 'Email', field: 'Email'},
+        {title: 'Subject', field: 'Subject'},
+        {title: 'Message', field: 'Message'}
     ];
     const [data, setData] = useState([]); // table data
 
@@ -68,9 +74,9 @@ const AdminsDataTable = () => {
     const [errorMessages, setErrorMessages] = useState([]);
 
     useEffect(() => {
-        api.get('/api/admin/adminsList')
+        api.get('/api/user/getContactTickets')
             .then((res) => {
-                setData(res.data.admins);
+                setData(res.data.contactUs);
             })
             .catch((error) => {
                 console.log('Error');
@@ -80,23 +86,15 @@ const AdminsDataTable = () => {
     const handleRowUpdate = (newData, oldData, resolve) => {
         // validation
         const errorList = [];
-        if (newData.title === undefined) {
-            errorList.push('Please enter title');
+        if (newData.title === '') {
+            errorList.push('Please enter valid title');
         }
-        if (newData.description === undefined) {
-            errorList.push('Please enter desc');
+        if (newData.description === '') {
+            errorList.push('Please enter valid description');
         }
-        if (newData.amount === undefined) {
-            errorList.push('Please enter amount');
-        }
-        if (newData.type === undefined) {
-            errorList.push('Please enter type');
-        }
-        if (newData.posts === undefined) {
-            errorList.push('Please enter posts');
-        }
+
         if (errorList.length < 1) {
-            api.patch(`/api/admin/plans/u/${newData.id}`, newData)
+            api.patch(`/api/product/${newData.id}`, newData)
                 .then((res) => {
                     const dataUpdate = [...data];
                     const index = oldData.tableData.id;
@@ -107,7 +105,6 @@ const AdminsDataTable = () => {
                     setErrorMessages([]);
                 })
                 .catch((error) => {
-                    console.log(error);
                     setErrorMessages([`Update failed! Server error${error}`]);
                     setIserror(true);
                     resolve();
@@ -119,44 +116,48 @@ const AdminsDataTable = () => {
         }
     };
 
-    const handleRowAdd = (newData, resolve) => {
-        // validation
-        const errorList = [];
-        if (newData.name === undefined) {
-            errorList.push('Please enter name');
-        }
-        if (newData.email === undefined) {
-            errorList.push('Please enter email');
-        }
-        if (newData.password === undefined) {
-            errorList.push('Please enter password');
-        }
+    // const handleRowAdd = (newData, resolve) => {
+    //     // validation
+    //     const errorList = [];
+    //     if (newData.first_name === undefined) {
+    //         errorList.push('Please enter first name');
+    //     }
+    //     if (newData.last_name === undefined) {
+    //         errorList.push('Please enter last name');
+    //     }
+    //     if (
+    //         newData.email === undefined ||
+    //         validateEmail(newData.email) === false
+    //     ) {
+    //         errorList.push('Please enter a valid email');
+    //     }
 
-        if (errorList.length < 1) {
-            // no error
-            api.post('/api/admin/auth/create', newData)
-                .then((res) => {
-                    const dataToAdd = [...data];
-                    dataToAdd.push(newData);
-                    setData(dataToAdd);
-                    resolve();
-                    setErrorMessages([]);
-                    setIserror(false);
-                })
-                .catch((error) => {
-                    setErrorMessages(['Cannot add data. Server error!']);
-                    setIserror(true);
-                    resolve();
-                });
-        } else {
-            setErrorMessages(errorList);
-            setIserror(true);
-            resolve();
-        }
-    };
+    //     if (errorList.length < 1) {
+    //         // no error
+    //         api.post('/users', newData)
+    //             .then((res) => {
+    //                 const dataToAdd = [...data];
+    //                 dataToAdd.push(newData);
+    //                 setData(dataToAdd);
+    //                 resolve();
+    //                 setErrorMessages([]);
+    //                 setIserror(false);
+    //             })
+    //             .catch((error) => {
+    //                 setErrorMessages(['Cannot add data. Server error!']);
+    //                 setIserror(true);
+    //                 resolve();
+    //             });
+    //     } else {
+    //         setErrorMessages(errorList);
+    //         setIserror(true);
+    //         resolve();
+    //     }
+    // };
 
     const handleRowDelete = (oldData, resolve) => {
-        api.delete(`/api/admin/admin/${oldData.id}`)
+        const pid = api
+            .delete(`/api/product/${oldData.id}`)
             .then((res) => {
                 console.log(oldData.id);
                 const dataDelete = [...data];
@@ -166,7 +167,6 @@ const AdminsDataTable = () => {
                 resolve();
             })
             .catch((error) => {
-                console.log(error);
                 setErrorMessages(['Delete failed! Server error']);
                 setIserror(true);
                 resolve();
@@ -191,25 +191,30 @@ const AdminsDataTable = () => {
                 <Grid item />
             </Grid>
             <div className="row">
-                <div className="col-lg-12  col-sm-12 col-md-6">
+                <div className="col-lg-12 col-md-8 col-sm-12">
                     <MaterialTable
                         options={{
-                            exportButton: true
+                            exportButton: true,
+                            filtering: true
                         }}
-                        title="List of Admins"
+                        title="List of Feedbacks"
                         columns={columns}
                         data={data}
                         icons={tableIcons}
-                        editable={{
-                            onRowAdd: (newData) =>
-                                new Promise((resolve) => {
-                                    handleRowAdd(newData, resolve);
-                                }),
-                            onRowDelete: (oldData) =>
-                                new Promise((resolve) => {
-                                    handleRowDelete(oldData, resolve);
-                                })
-                        }}
+                        // editable={{
+                        //     onRowUpdate: (newData, oldData) =>
+                        //         new Promise((resolve) => {
+                        //             handleRowUpdate(newData, oldData, resolve);
+                        //         }),
+                        //     // onRowAdd: (newData) =>
+                        //     //     new Promise((resolve) => {
+                        //     //         handleRowAdd(newData, resolve);
+                        //     //     }),
+                        //     onRowDelete: (oldData) =>
+                        //         new Promise((resolve) => {
+                        //             handleRowDelete(oldData, resolve);
+                        //         })
+                        // }}
                     />
                 </div>
             </div>
@@ -217,4 +222,4 @@ const AdminsDataTable = () => {
     );
 };
 
-export default AdminsDataTable;
+export default PaymentsDataTable;

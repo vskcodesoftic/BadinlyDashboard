@@ -11,6 +11,8 @@ const refreshPage = () => {
     window.location.reload();
 };
 
+
+
 const ChangePasswordPage = (props) => {
     // const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
     const {register, handleSubmit} = useForm();
@@ -26,22 +28,24 @@ const ChangePasswordPage = (props) => {
 
     const onSubmit = (data) => {
         // still to resolve promise
-
+     
+        if (data.newpassword !== data.newpassword1) {
+            alert("Passwords don't match");
+        } else {
+            // make API call
+        }
         const fd = new FormData();
 
         setspinner(true);
 
         axios
-            .post(
-                'https://https://badilnyint.com/api/admin/changePassword',
-                data
-            )
+            .post('https://badilnyint.com/api/admin/changePassword', data)
             .then((res) => {
                 console.log(res.data);
+                localStorage.removeItem("token");
                 toast.success(`Password updated sucessfully !`);
-                setspinner(false);
-                refreshPage();
-                setRedirect(true);
+                refreshPage()
+
             })
             .catch((error) => {
                 console.log('Error', error);
@@ -52,7 +56,7 @@ const ChangePasswordPage = (props) => {
     };
 
     if (Redirect) {
-        return <Redirect to="/" />;
+        return <Redirect to="/login" />;
     }
     return (
         <div>
@@ -86,6 +90,17 @@ const ChangePasswordPage = (props) => {
                                     <input
                                         type="password"
                                         {...register('newpassword', {
+                                            required: true
+                                        })}
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="Field-group mb-3">
+                                    <p>Confirm Password*</p>
+                                    <input
+                                        type="password"
+                                        {...register('newpassword1', {
                                             required: true
                                         })}
                                         className="form-control"

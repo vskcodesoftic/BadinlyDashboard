@@ -116,6 +116,16 @@ const MenuSidebar = ({user}) => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink
+                                to="/ContactUsPage"
+                                exact
+                                className="nav-link"
+                            >
+                                <i className="nav-icon fas fa-bell" />
+                                <p>{t('menusidebar.label.contactus')}</p>
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink to="/payments" exact className="nav-link">
                                 <i className="nav-icon fas fa-money-bill-wave-alt" />
                                 <p>{t('menusidebar.label.payments')}</p>

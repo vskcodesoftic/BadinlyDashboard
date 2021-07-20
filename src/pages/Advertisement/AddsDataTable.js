@@ -54,7 +54,7 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `https://badilnyint.com`
+    baseURL: `https://badilnyint.com/`
 });
 
 const AddsDataTable = (props) => {

@@ -2,9 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const GetUsersCount = () => {
+const getCustomerCount = () => {
     const api = axios.create({
-        baseURL: `${process.env.REACT_APP_SERVER_URL}`
+        baseURL: `https://badilnyint.com`
     });
 
     const [data, setData] = useState([]); // table data
@@ -13,7 +13,7 @@ const GetUsersCount = () => {
     const [errorMessages, setErrorMessages] = useState([]);
 
     useEffect(() => {
-        api.get('api/admin/getUsersCount')
+        api.get('/api/user/getCustomerCount')
             .then((res) => {
                 setData(res.data.users);
                 setIserror(false);
@@ -28,4 +28,4 @@ const GetUsersCount = () => {
     return <>{iserror ? errorMessages : data}</>;
 };
 
-export default GetUsersCount;
+export default getCustomerCount;

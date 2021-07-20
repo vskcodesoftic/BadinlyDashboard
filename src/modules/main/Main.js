@@ -26,6 +26,7 @@ import CategoryPage from '../../pages/Category/CategoryPage';
 import AddPrdouctPage from '../../pages/Products/AddProductPage';
 import AddAdvertisementImage from '../../pages/Advertisement/AddAdvertisementImage';
 import AddCategoryPage from '../../pages/Category/AddCategoryPage';
+import ContactUsPage from '../../pages/ContactUS/ContactUsPage';
 
 const Main = ({onUserLoad}) => {
     const [appLoadingState, updateAppLoading] = useState(false);
@@ -156,6 +157,11 @@ const Main = ({onUserLoad}) => {
                                 exact
                                 path="/TradesPage"
                                 component={TradesPage}
+                            />
+                            <Route
+                                exact
+                                path="/ContactUsPage"
+                                component={ContactUsPage}
                             />
 
                             <Route exact path="/profile" component={Profile} />
