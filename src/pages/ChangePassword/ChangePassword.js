@@ -11,8 +11,6 @@ const refreshPage = () => {
     window.location.reload();
 };
 
-
-
 const ChangePasswordPage = (props) => {
     // const {userId, title ,description,category,subcategory,status,quantity,isShow,isFeatured,image} = props;
     const {register, handleSubmit} = useForm();
@@ -28,7 +26,7 @@ const ChangePasswordPage = (props) => {
 
     const onSubmit = (data) => {
         // still to resolve promise
-     
+
         if (data.newpassword !== data.newpassword1) {
             alert("Passwords don't match");
         } else {
@@ -42,10 +40,9 @@ const ChangePasswordPage = (props) => {
             .post('https://badilnyint.com/api/admin/changePassword', data)
             .then((res) => {
                 console.log(res.data);
-                localStorage.removeItem("token");
+                localStorage.removeItem('token');
                 toast.success(`Password updated sucessfully !`);
-                refreshPage()
-
+                refreshPage();
             })
             .catch((error) => {
                 console.log('Error', error);

@@ -6,6 +6,10 @@ import GetProductsCount from '@app/pages/Products/GetProductsCount';
 import GetFeauturedProductsCount from '@app/pages/Products/GetFeauturedProductsCount';
 import GetPaymentsCount from '@app/pages/Payments/GetPaymentsCount';
 
+export const GetCurrentUser = () => {
+    const C = JSON.parse(localStorage.getItem('user'));
+    return C;
+};
 const Dashboard = () => {
     return (
         <div className="container-fluid">
@@ -46,9 +50,13 @@ const Dashboard = () => {
                     />
                 </div>
             </div>
-            <div className="row ">
-                <div className="">
-                    <h1 className="text-center">Hello </h1>
+            <div className="row">
+                <div className="col-12">
+                    <center>
+                        <h4 className="text-center">
+                            مرحبا {GetCurrentUser().email}
+                        </h4>
+                    </center>
                 </div>
             </div>
         </div>
