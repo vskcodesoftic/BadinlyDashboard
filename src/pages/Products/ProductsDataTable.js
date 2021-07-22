@@ -107,6 +107,11 @@ const ProductsDataTable = () => {
 
         {title: 'title', field: 'title'},
         {title: 'Desc', field: 'description'},
+        {title: 'category', field: 'category'},
+        {title: 'subcategory', field: 'subcategory'},
+        {title: 'recommendCategory', field: 'recommendCategory'},
+        {title: 'recommendSubcategory', field: 'recommendSubcategory'},
+
         {
             title: 'image',
             field: 'image',

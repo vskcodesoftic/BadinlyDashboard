@@ -26,6 +26,9 @@ const AddPrdouctPage = (props) => {
     let SubCategoryLength;
     let superText;
 
+     
+    let optionalImages = [];
+
     let selectedValue;
     const [Category, setCategory] = useState([]);
     const [QueryCategory, SetQueryCategory] = useState([]);
@@ -33,9 +36,9 @@ const AddPrdouctPage = (props) => {
     const [Spinner, setSpinner] = useState(false);
 
     const [redirect, setredirect] = useState(false);
+    
+    const [optinalImagesProduct, setoptinalImagesProduct] = useState([])
 
-    const [FilteredSubCat, setFilteredSubCat] = useState([]);
-    const [FiltredSubLen, setFiltredSubLen] = useState('');
 
     const [
         selectedCategoryFromDropDown,
@@ -46,9 +49,12 @@ const AddPrdouctPage = (props) => {
     const numbers = [1, 2, 3, 4, 5];
 
     const api = axios.create({
-        baseURL: `https://badilnyint.com/`
+        baseURL: `http://localhost:9005/`
     });
 
+
+
+      
     const MakeItem = function (value) {
         return (
             <>
@@ -231,9 +237,31 @@ const AddPrdouctPage = (props) => {
     const {register, handleSubmit} = useForm();
     const [ImageValue, setImageValue] = useState('');
     const [t] = useTranslation();
+    const [products, setProducts] = useState(optinalImagesProduct);
+
     const fileInput = React.createRef();
 
+    const FileInputOne = React.createRef();
+    const FileInputtwo = React.createRef();
+    const FileInputthree = React.createRef();
+
+
+    const onChangeHandler = (e) => {
+
+        let { files } = e.target;
+
+        _.forEach(files, file => {
+            fd.append('files', file);
+        });
+
+    }
+
+
+
+
     const onSubmit = async (data) => {
+   
+
         // still to resolve promise
         console.log(
             'onSubmitFn:',
@@ -244,6 +272,7 @@ const AddPrdouctPage = (props) => {
         const fd = new FormData();
         for (var key in data) {
             fd.append(key, data[key]); // formdata doesn't take objects
+            
         }
 
         await fd.append(
@@ -251,6 +280,16 @@ const AddPrdouctPage = (props) => {
             fileInput.current.files[0],
             fileInput.current.files[0].name
         );
+
+
+      
+
+
+      
+        
+
+
+  
         setSpinner(true);
         api.post('/api/admin/postItem', fd)
             .then((res) => {
@@ -395,6 +434,105 @@ const AddPrdouctPage = (props) => {
                                                 )
                                             )}
                                         </div>
+                                        <div className="Field-group mb-3">
+                                            <p>RecommendCategory*</p>
+                                            {Object.keys(Category).map(
+                                                (item, i) => (
+                                                    <select
+                                                        key={i}
+                                                        {...register(
+                                                            'recommendCategory'
+                                                        )}
+                                                        className="form-control"
+                                                        onChange={(e) => {
+                                                            selectedValue =
+                                                                e.target.value;
+                                                            console.log(
+                                                                selectedValue
+                                                            );
+                                                            setselectedCategoryFromDropDown(
+                                                                e.target.value
+                                                            );
+                                                            //   dropHandler(e)
+                                                            //{FilterDataCopy()}
+                                                        }}
+                                                        className="form-control"
+                                                        placeholder="recommendCategory"
+                                                    >
+                                                        {Category[i].map(
+                                                            (c, i) => (
+                                                                <>
+                                                                    <option
+                                                                        key={i}
+                                                                        value={
+                                                                            c.category
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            c.category
+                                                                        }
+                                                                    </option>
+                                                                </>
+                                                            )
+                                                        )}
+                                                    </select>
+                                                )
+                                            )}
+                                        </div>
+                                        <div className="Field-group mb-3">
+                                            <p>recommendSubcategory*</p>
+
+                                            {Object.entries(SubCategory).map(
+                                                (item, i) => (
+                                                    <select
+                                                        key={items}
+                                                        {...register(
+                                                            'recommendSubcategory',
+                                                            {
+                                                                required: true
+                                                            }
+                                                        )}
+                                                        className="form-control"
+                                                        placeholder="recommendSubcategory"
+                                                    >
+                                                        {SubCategory[i].map(
+                                                            (c, ix) => {
+                                                                let clen =
+                                                                    c
+                                                                        .subcategory
+                                                                        .length;
+                                                                for (
+                                                                    let index = ix;
+                                                                    index <
+                                                                    clen;
+                                                                    index++
+                                                                ) {
+                                                                    const element =
+                                                                        c.subcategory;
+                                                                    console.log(
+                                                                        index,
+                                                                        clen,
+                                                                        element[
+                                                                            index
+                                                                        ]
+                                                                    );
+
+                                                                    finalArray.push(
+                                                                        element[
+                                                                            index
+                                                                        ]
+                                                                    );
+                                                                }
+                                                            }
+                                                        )}
+
+                                                        {finalArray.map(
+                                                            MakeItem
+                                                        )}
+                                                    </select>
+                                                )
+                                            )}
+                                        </div>
 
                                         <div className="Field-group mb-3">
                                             <input
@@ -407,6 +545,7 @@ const AddPrdouctPage = (props) => {
                                                 placeholder="creator"
                                             />
                                         </div>
+                                      
                                         <div className="Field-group mb-3">
                                             <p>Image*</p>
                                             <input
@@ -418,6 +557,8 @@ const AddPrdouctPage = (props) => {
                                                 placeholder="Please choose Image"
                                             />
                                         </div>
+                                       
+                                       
                                         <div className="Field-group mb-3">
                                             <p>isFeatured*</p>
                                             <select
