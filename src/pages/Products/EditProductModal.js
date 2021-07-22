@@ -24,6 +24,9 @@ const EditProdutModal = (props) => {
         isFeatured,
         image
     } = props;
+
+    const [recomdendSubcategory, setrecomdendSubcategory] = useState([])
+
     const {register, handleSubmit} = useForm({
         defaultValues: {
             title: `${title}`,
@@ -347,7 +350,7 @@ const EditProdutModal = (props) => {
                                                                         ]
                                                                     );
 
-                                                                    finalArray.push(
+                                                                    recomdendSubcategory.push(
                                                                         element[
                                                                             index
                                                                         ]
@@ -356,7 +359,7 @@ const EditProdutModal = (props) => {
                                                             }
                                                         )}
 
-                                                        {finalArray.map(
+                                                        {recomdendSubcategory.map(
                                                             MakeItem
                                                         )}
                                                     </select>
