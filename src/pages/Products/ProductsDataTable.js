@@ -281,7 +281,7 @@ const ProductsDataTable = () => {
                     <MaterialTable
                         options={{
                             exportButton: true,
-                            selection: true,
+                            // selection: true,
                             filtering: true
                         }}
                         title="List of Feautured Products (title,desc are editable)"
@@ -303,16 +303,16 @@ const ProductsDataTable = () => {
                                     handleRowDelete(oldData, resolve);
                                 })
                         }}
-                        actions={[
-                            {
-                                tooltip: 'make active all products',
-                                icon: 'delete',
-                                onClick: (evt, data) =>
-                                    alert(
-                                        'You want to delete ' + data.length + ''
-                                    )
-                            }
-                        ]}
+                        // actions={[
+                        //     {
+                        //         tooltip: 'make active all products',
+                        //         icon: 'delete',
+                        //         onClick: (evt, data) =>
+                        //             alert(
+                        //                 'You want to delete ' + data.length + ''
+                        //             )
+                        //     }
+                        // ]}
                     />
                 </div>
             </div>{' '}
