@@ -39,6 +39,7 @@ const AddPrdouctPage = (props) => {
     
     const [optinalImagesProduct, setoptinalImagesProduct] = useState([])
 
+    const [recomdendSubcategory, setrecomdendSubcategory] = useState([])
 
     const [
         selectedCategoryFromDropDown,
@@ -46,6 +47,9 @@ const AddPrdouctPage = (props) => {
     ] = useState('');
 
     let finalArray = [];
+    
+    let finalrecomdendSubcategory = []
+
     const numbers = [1, 2, 3, 4, 5];
 
     const api = axios.create({
@@ -64,6 +68,8 @@ const AddPrdouctPage = (props) => {
             </>
         );
     };
+
+
 
     //useedddjvvjvv
     useEffect(() => {
@@ -517,7 +523,7 @@ const AddPrdouctPage = (props) => {
                                                                         ]
                                                                     );
 
-                                                                    finalArray.push(
+                                                                    recomdendSubcategory.push(
                                                                         element[
                                                                             index
                                                                         ]
@@ -526,7 +532,7 @@ const AddPrdouctPage = (props) => {
                                                             }
                                                         )}
 
-                                                        {finalArray.map(
+                                                        {recomdendSubcategory.map(
                                                             MakeItem
                                                         )}
                                                     </select>

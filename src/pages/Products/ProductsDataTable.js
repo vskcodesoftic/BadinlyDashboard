@@ -54,7 +54,7 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `http://localhost:9005/`
+    baseURL: `https://badilnyint.com/`
 });
 
 const ProductsDataTable = () => {
@@ -259,6 +259,8 @@ const ProductsDataTable = () => {
     //             resolve();
     //         });
     // };
+
+    
     return (
         <div className="App">
             <Grid container spacing={2}>
