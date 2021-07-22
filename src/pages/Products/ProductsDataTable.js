@@ -54,7 +54,7 @@ const tableIcons = {
 };
 
 const api = axios.create({
-    baseURL: `https://badilnyint.com/`
+    baseURL: `http://localhost:9005/`
 });
 
 const ProductsDataTable = () => {
@@ -243,22 +243,22 @@ const ProductsDataTable = () => {
             });
     };
 
-    const handleRowSatusUpdate = (oldData, resolve) => {
-        api.delete(`/api/product/${oldData.id}`)
-            .then((res) => {
-                console.log(oldData.id);
-                const dataDelete = [...data];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                setData([...dataDelete]);
-                resolve();
-            })
-            .catch((error) => {
-                setErrorMessages(['Delete failed! Server error']);
-                setIserror(true);
-                resolve();
-            });
-    };
+    // const handleRowSatusUpdate = (oldData, resolve) => {
+    //     api.delete(`/api/product/${oldData.id}`)
+    //         .then((res) => {
+    //             console.log(oldData.id);
+    //             const dataDelete = [...data];
+    //             const index = oldData.tableData.id;
+    //             dataDelete.splice(index, 1);
+    //             setData([...dataDelete]);
+    //             resolve();
+    //         })
+    //         .catch((error) => {
+    //             setErrorMessages(['Delete failed! Server error']);
+    //             setIserror(true);
+    //             resolve();
+    //         });
+    // };
     return (
         <div className="App">
             <Grid container spacing={2}>
@@ -307,10 +307,24 @@ const ProductsDataTable = () => {
                         //     {
                         //         tooltip: 'make active all products',
                         //         icon: 'delete',
-                        //         onClick: (evt, data) =>
+                        //         onClick: (evt, data) => {
                         //             alert(
                         //                 'You want to delete ' + data.length + ''
                         //             )
+                                  
+                        //             api.delete(`/api/product/${data._id}`)
+                        //             .then((res) => {
+                        //                 console.log(data._id);
+                        //                 const dataDelete = [...data];
+                        //                 const index = data.tableData._id;
+                        //                 dataDelete.splice(index, 1);
+                        //                 setData([...dataDelete]);
+                        //             })
+                        //             .catch((error) => {
+                        //                 setErrorMessages(['Delete failed! Server error']);
+                        //                 setIserror(true);
+                        //             })
+                        //         }
                         //     }
                         // ]}
                     />
