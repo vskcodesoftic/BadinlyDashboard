@@ -49,7 +49,7 @@ const AddPrdouctPage = (props) => {
     const numbers = [1, 2, 3, 4, 5];
 
     const api = axios.create({
-        baseURL: `http://localhost:9005/`
+        baseURL: `https://badilnyint.com/`
     });
 
 
