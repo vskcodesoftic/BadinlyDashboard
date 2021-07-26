@@ -14,8 +14,8 @@ class ImageUpdate extends Component {
         super(props);
         this.state = {
             image: '',
-            title: '',
-            description: '',
+            title: 'title',
+            description: 'descrption',
             spinner: false,
             redirect: false
         };
@@ -111,9 +111,9 @@ class ImageUpdate extends Component {
 
                                         <div className="form-group">
                                             <label className="label ">
-                                                <p>Title*</p>
                                             </label>
                                             <input
+                                                type="hidden"
                                                 name="title"
                                                 value={title}
                                                 onChange={this.onChange}
@@ -123,9 +123,9 @@ class ImageUpdate extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label className="label ">
-                                                <p>Description*</p>
                                             </label>
                                             <input
+                                                type="hidden"
                                                 name="description"
                                                 value={description}
                                                 onChange={this.onChange}
@@ -136,11 +136,11 @@ class ImageUpdate extends Component {
 
                                         {this.state.spinner ? (
                                             <Loader
-                                                type="bubble-top"
+                                                type="spinner-circle"
                                                 className="mt-5"
                                                 bgColor={'#000000'}
                                                 title={'...loading'}
-                                                size={100}
+                                                size={50}
                                             />
                                         ) : null}
                                         <div className="form-group">

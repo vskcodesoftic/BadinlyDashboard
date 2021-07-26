@@ -335,13 +335,13 @@ const SendNotificationToSpecficVendor = (props) => {
                                     </form>
                                 </div>
                                 {Spinner ? (
-                                    <Loader
-                                        type="bubble-top"
-                                        className="mt-5"
-                                        bgColor={'#000000'}
-                                        title={'...loading'}
-                                        size={100}
-                                    />
+     <Loader
+     type="spinner-circle"
+     className="mt-5"
+     bgColor={'#000000'}
+     title={'...loading'}
+     size={50}
+ />
                                 ) : null}
                             </div>
                         </div>

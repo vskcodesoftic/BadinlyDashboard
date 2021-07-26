@@ -96,9 +96,6 @@ const SliderDataTable = () => {
 
     const columns = [
         {title: 'id', field: '_id', hidden: false},
-
-        {title: 'title', field: 'title'},
-        {title: 'Desc', field: 'description'},
         {
             title: 'image',
             field: 'image',

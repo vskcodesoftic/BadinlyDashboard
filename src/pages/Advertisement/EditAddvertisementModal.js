@@ -125,11 +125,11 @@ const EditAddvertisementModal = (props) => {
 
                                 {Spinner ? (
                                     <Loader
-                                        type="bubble-top"
+                                        type="spinner-circle"
                                         className="mt-5"
                                         bgColor={'#000000'}
                                         title={'...loading'}
-                                        size={100}
+                                        size={50}
                                     />
                                 ) : null}
                             </form>
