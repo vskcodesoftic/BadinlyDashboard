@@ -32,6 +32,9 @@ const AddPrdouctPage = (props) => {
     const [Category, setCategory] = useState([]);
     const [QueryCategory, SetQueryCategory] = useState([]);
     const [SubCategory, setSubCategory] = useState([]);
+
+    const [RecSubCategory, setRecSubCategory] = useState([]);
+
     const [Spinner, setSpinner] = useState(false);
 
     const [redirect, setredirect] = useState(false);
@@ -40,12 +43,22 @@ const AddPrdouctPage = (props) => {
 
     const [recomdendSubcategory, setrecomdendSubcategory] = useState([]);
 
+
+
     const [
         selectedCategoryFromDropDown,
         setselectedCategoryFromDropDown
     ] = useState('');
 
+
+    const [
+        selectedRecommdedCategoryFromDropDown,
+        setselectedRecommdedCategoryFromDropDown
+    ] = useState('');
+
     let finalArray = [];
+
+    let finalSubArray = [];
 
     let finalrecomdendSubcategory = [];
 
@@ -127,6 +140,73 @@ const AddPrdouctPage = (props) => {
         //console.log("cccccc",selectedCategoryFromDropDown);
     }, [selectedCategoryFromDropDown]);
 
+
+
+
+       //recommended sub category fetch
+       useEffect(() => {
+        axios
+            .get(
+                `https://badilnyint.com/api/admin/getSubs?CId=${selectedRecommdedCategoryFromDropDown}`
+            )
+            .then((res) => {
+                // //SubCategoriesFound is an array
+
+                // const c = res.data.SubCategories[0]
+                // SubCategoriesFound =res.data.SubCategories[0]
+
+                // SubCategoryLength = SubCategoriesFound.length
+
+                // console.log("c",c)
+                // console.log("cz",SubCategoriesFound)
+                // console.log("czlen", SubCategoryLength)
+
+                // const objectArray =  Object.entries(SubCategoriesFound[0]);
+
+                // objectArray.forEach(async ([key, value]) => {
+                // console.log("key is h:",key); // 'one'
+                // const subArry = value;
+                //  SubCategoryObjectValues = subArry
+
+                // console.log("values k:",SubCategoryObjectValues); // 1
+
+                // });
+
+                //FilterDataCopy()
+
+                setRecSubCategory(res.data.SubCategories);
+                //let subs ;
+                //console.log(res.data)
+
+                //console.log("gggg",SubCategory)
+                // const result =  Object.values(res.data.SubCategories);
+                //  setSubCategory(result)
+
+                // subs =  res.data.SubCategories
+
+                // const objectArray =  Object.entries(SubCategory[0]);
+
+                // objectArray.forEach(async ([key, value]) => {
+                // console.log("key is h:",key); // 'one'
+                // const subArry = value.subcategory;
+                //  setFilteredSubCat(subArry)
+                // const subArryLen = subArry.length;
+
+                //  setFiltredSubLen(subArryLen)
+                // console.log("values k:",FilteredSubCat, FiltredSubLen); // 1
+
+                // });
+            })
+
+            .catch((err) => {
+                console.error(err);
+            });
+        // do stuff
+        //console.log("cccccc",selectedCategoryFromDropDown);
+    }, [selectedRecommdedCategoryFromDropDown]);
+
+
+
     useEffect(() => {
         axios
             .get('https://badilnyint.com/api/admin/getCats')
@@ -148,6 +228,7 @@ const AddPrdouctPage = (props) => {
                 setCategory(res.data.Categories);
 
                 setselectedCategoryFromDropDown(intialDropdownValue);
+                setselectedRecommdedCategoryFromDropDown(intialDropdownValue);
             })
             .catch((err) => {
                 console.error(err);
@@ -432,7 +513,7 @@ const AddPrdouctPage = (props) => {
                                                             console.log(
                                                                 selectedValue
                                                             );
-                                                            setselectedCategoryFromDropDown(
+                                                            setselectedRecommdedCategoryFromDropDown(
                                                                 e.target.value
                                                             );
                                                             //   dropHandler(e)
@@ -461,10 +542,12 @@ const AddPrdouctPage = (props) => {
                                                 )
                                             )}
                                         </div>
-                                        <div className="Field-group mb-3">
-                                            <p>recommendSubcategory*</p>
+                                       
 
-                                            {Object.entries(SubCategory).map(
+                                        <div className="Field-group mb-3">
+                                            <p>RecommendedSubCategory*</p>
+
+                                            {Object.entries(RecSubCategory).map(
                                                 (item, i) => (
                                                     <select
                                                         key={items}
@@ -475,9 +558,8 @@ const AddPrdouctPage = (props) => {
                                                             }
                                                         )}
                                                         className="form-control"
-                                                        placeholder="recommendSubcategory"
                                                     >
-                                                        {SubCategory[i].map(
+                                                        {RecSubCategory[i].map(
                                                             (c, ix) => {
                                                                 let clen =
                                                                     c
@@ -499,7 +581,7 @@ const AddPrdouctPage = (props) => {
                                                                         ]
                                                                     );
 
-                                                                    recomdendSubcategory.push(
+                                                                    finalSubArray.push(
                                                                         element[
                                                                             index
                                                                         ]
@@ -508,7 +590,7 @@ const AddPrdouctPage = (props) => {
                                                             }
                                                         )}
 
-                                                        {recomdendSubcategory.map(
+                                                        {finalSubArray.map(
                                                             MakeItem
                                                         )}
                                                     </select>
