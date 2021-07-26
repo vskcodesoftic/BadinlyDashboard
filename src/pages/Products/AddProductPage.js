@@ -26,7 +26,6 @@ const AddPrdouctPage = (props) => {
     let SubCategoryLength;
     let superText;
 
-     
     let optionalImages = [];
 
     let selectedValue;
@@ -36,10 +35,10 @@ const AddPrdouctPage = (props) => {
     const [Spinner, setSpinner] = useState(false);
 
     const [redirect, setredirect] = useState(false);
-    
-    const [optinalImagesProduct, setoptinalImagesProduct] = useState([])
 
-    const [recomdendSubcategory, setrecomdendSubcategory] = useState([])
+    const [optinalImagesProduct, setoptinalImagesProduct] = useState([]);
+
+    const [recomdendSubcategory, setrecomdendSubcategory] = useState([]);
 
     const [
         selectedCategoryFromDropDown,
@@ -47,8 +46,8 @@ const AddPrdouctPage = (props) => {
     ] = useState('');
 
     let finalArray = [];
-    
-    let finalrecomdendSubcategory = []
+
+    let finalrecomdendSubcategory = [];
 
     const numbers = [1, 2, 3, 4, 5];
 
@@ -56,9 +55,6 @@ const AddPrdouctPage = (props) => {
         baseURL: `https://badilnyint.com/`
     });
 
-
-
-      
     const MakeItem = function (value) {
         return (
             <>
@@ -68,8 +64,6 @@ const AddPrdouctPage = (props) => {
             </>
         );
     };
-
-
 
     //useedddjvvjvv
     useEffect(() => {
@@ -251,23 +245,15 @@ const AddPrdouctPage = (props) => {
     const FileInputtwo = React.createRef();
     const FileInputthree = React.createRef();
 
-
     const onChangeHandler = (e) => {
+        let {files} = e.target;
 
-        let { files } = e.target;
-
-        _.forEach(files, file => {
+        _.forEach(files, (file) => {
             fd.append('files', file);
         });
-
-    }
-
-
-
+    };
 
     const onSubmit = async (data) => {
-   
-
         // still to resolve promise
         console.log(
             'onSubmitFn:',
@@ -278,7 +264,6 @@ const AddPrdouctPage = (props) => {
         const fd = new FormData();
         for (var key in data) {
             fd.append(key, data[key]); // formdata doesn't take objects
-            
         }
 
         await fd.append(
@@ -287,15 +272,6 @@ const AddPrdouctPage = (props) => {
             fileInput.current.files[0].name
         );
 
-
-      
-
-
-      
-        
-
-
-  
         setSpinner(true);
         api.post('/api/admin/postItem', fd)
             .then((res) => {
@@ -551,7 +527,7 @@ const AddPrdouctPage = (props) => {
                                                 placeholder="creator"
                                             />
                                         </div>
-                                      
+
                                         <div className="Field-group mb-3">
                                             <p>Image*</p>
                                             <input
@@ -563,8 +539,7 @@ const AddPrdouctPage = (props) => {
                                                 placeholder="Please choose Image"
                                             />
                                         </div>
-                                       
-                                       
+
                                         <div className="Field-group mb-3">
                                             <p>isFeatured*</p>
                                             <select
@@ -607,13 +582,13 @@ const AddPrdouctPage = (props) => {
                                     </form>
                                 </div>
                                 {Spinner ? (
-     <Loader
-     type="spinner-circle"
-     className="mt-5"
-     bgColor={'#000000'}
-     title={'...loading'}
-     size={50}
- />
+                                    <Loader
+                                        type="spinner-circle"
+                                        className="mt-5"
+                                        bgColor={'#000000'}
+                                        title={'...loading'}
+                                        size={50}
+                                    />
                                 ) : null}
                             </div>
                         </div>

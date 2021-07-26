@@ -116,13 +116,13 @@ const ChangePasswordPage = (props) => {
                                 </div>
                             </form>
                             {spinner ? (
-       <Loader
-       type="spinner-circle"
-       className="mt-5"
-       bgColor={'#000000'}
-       title={'...loading'}
-       size={50}
-   />
+                                <Loader
+                                    type="spinner-circle"
+                                    className="mt-5"
+                                    bgColor={'#000000'}
+                                    title={'...loading'}
+                                    size={50}
+                                />
                             ) : null}
                         </div>
                     </div>

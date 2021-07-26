@@ -260,7 +260,6 @@ const ProductsDataTable = () => {
     //         });
     // };
 
-    
     return (
         <div className="App">
             <Grid container spacing={2}>
@@ -313,7 +312,7 @@ const ProductsDataTable = () => {
                         //             alert(
                         //                 'You want to delete ' + data.length + ''
                         //             )
-                                  
+
                         //             api.delete(`/api/product/${data._id}`)
                         //             .then((res) => {
                         //                 console.log(data._id);
