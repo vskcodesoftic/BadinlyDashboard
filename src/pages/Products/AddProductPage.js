@@ -564,10 +564,10 @@ const AddPrdouctPage = (props) => {
                                                     required: true
                                                 })}
                                             >
-                                                <option value="true">
+                                                <option value="active">
                                                     active
                                                 </option>
-                                                <option value="false">
+                                                <option value="inactive">
                                                     inactive
                                                 </option>
                                             </select>
