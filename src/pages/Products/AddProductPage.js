@@ -557,6 +557,23 @@ const AddPrdouctPage = (props) => {
                                             </select>
                                         </div>
                                         <div className="Field-group mb-3">
+                                            <p>Status*</p>
+                                            <select
+                                                className="form-control"
+                                                {...register('status', {
+                                                    required: true
+                                                })}
+                                            >
+                                                <option value="true">
+                                                    active
+                                                </option>
+                                                <option value="false">
+                                                    inactive
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div className="Field-group mb-3">
                                             <p>Qunatity*</p>
 
                                             <input
