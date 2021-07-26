@@ -10,6 +10,8 @@ import Select from 'react-select';
 import Loader from 'react-js-loader';
 import {Redirect} from 'react-router-dom';
 
+import Multiselect from 'multiselect-react-dropdown';
+
 const refreshPage = () => {
     window.location.reload();
 };

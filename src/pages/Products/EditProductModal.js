@@ -22,7 +22,9 @@ const EditProdutModal = (props) => {
         quantity,
         isShow,
         isFeatured,
-        image
+        image,
+        reccomendedSubCategoryOfProduct,
+        recommedCateogyOfProduct
     } = props;
 
     const [recomdendSubcategory, setrecomdendSubcategory] = useState([]);
@@ -44,7 +46,10 @@ const EditProdutModal = (props) => {
             category: `${category}`,
             // subcategory: `${subcategory}`,
             image: `${image}`,
-            isShow: `${isShow}`
+            isShow: `${isShow}`,
+            recommendSubcategory : `${reccomendedSubCategoryOfProduct}`,
+            recommendCategory :`${recommedCateogyOfProduct}` 
+
         }
     });
 
@@ -440,7 +445,8 @@ const EditProdutModal = (props) => {
                                                 )
                                             )}
                                         </div>
-<div className="Field-group mb-3">
+                                        
+                     <div className="Field-group mb-3">
                                     <p>Image*</p>
                                     <input
                                         required
