@@ -205,7 +205,7 @@ const DataTable = () => {
                             onRowUpdate: (newData, oldData) =>
                                 new Promise((resolve) => {
                                     handleRowUpdate(newData, oldData, resolve);
-                                }),
+                                })
                             // onRowAdd: (newData) =>
                             //     new Promise((resolve) => {
                             //         handleRowAdd(newData, resolve);

@@ -15,8 +15,9 @@ class ImageUpdate extends Component {
             image: '',
             title: '',
             description: '',
+            hyperLink:'',
             spinner: false,
-            redirect: false
+            redirect: false,
         };
     }
     onChange = (e) => {
@@ -42,6 +43,8 @@ class ImageUpdate extends Component {
         formData.append('image', this.state.image);
         formData.append('description', this.state.description);
         formData.append('title', this.state.title);
+        formData.append('hyperLink', this.state.hyperLink);
+
 
         this.setState({spinner: true});
         // still to resolve promise
@@ -60,7 +63,7 @@ class ImageUpdate extends Component {
     };
 
     render() {
-        const {imageUrl, description, title, redirect} = this.state;
+        const {imageUrl, description, title, redirect , hyperLink}  = this.state;
 
         if (redirect) {
             return <Redirect to="/Adds" />;
@@ -117,6 +120,17 @@ class ImageUpdate extends Component {
                                 <input
                                     name="description"
                                     value={description}
+                                    onChange={this.onChange}
+                                    className="form-control"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="label ">hyperLink*</label>
+                                <input
+                                    required
+                                    name="hyperLink"
+                                    value={hyperLink}
                                     onChange={this.onChange}
                                     className="form-control"
                                 />

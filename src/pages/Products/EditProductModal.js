@@ -47,9 +47,8 @@ const EditProdutModal = (props) => {
             // subcategory: `${subcategory}`,
             image: `${image}`,
             isShow: `${isShow}`,
-            recommendSubcategory : `${reccomendedSubCategoryOfProduct}`,
-            recommendCategory :`${recommedCateogyOfProduct}` 
-
+            recommendSubcategory: `${reccomendedSubCategoryOfProduct}`,
+            recommendCategory: `${recommedCateogyOfProduct}`
         }
     });
 
@@ -119,7 +118,6 @@ const EditProdutModal = (props) => {
                 setCategory(res.data.Categories);
 
                 setselectedCategoryFromDropDown(category);
-                
             })
             .catch((err) => {
                 console.error(err);
@@ -141,72 +139,68 @@ const EditProdutModal = (props) => {
             });
     }, [selectedCategoryFromDropDown]);
 
+    //recommended sub category fetch
+    useEffect(() => {
+        axios
+            .get(
+                `https://badilnyint.com/api/admin/getSubs?CId=${selectedRecommdedCategoryFromDropDown}`
+            )
+            .then((res) => {
+                // //SubCategoriesFound is an array
 
+                // const c = res.data.SubCategories[0]
+                // SubCategoriesFound =res.data.SubCategories[0]
 
+                // SubCategoryLength = SubCategoriesFound.length
 
-         //recommended sub category fetch
-         useEffect(() => {
-            axios
-                .get(
-                    `https://badilnyint.com/api/admin/getSubs?CId=${selectedRecommdedCategoryFromDropDown}`
-                )
-                .then((res) => {
-                    // //SubCategoriesFound is an array
-    
-                    // const c = res.data.SubCategories[0]
-                    // SubCategoriesFound =res.data.SubCategories[0]
-    
-                    // SubCategoryLength = SubCategoriesFound.length
-    
-                    // console.log("c",c)
-                    // console.log("cz",SubCategoriesFound)
-                    // console.log("czlen", SubCategoryLength)
-    
-                    // const objectArray =  Object.entries(SubCategoriesFound[0]);
-    
-                    // objectArray.forEach(async ([key, value]) => {
-                    // console.log("key is h:",key); // 'one'
-                    // const subArry = value;
-                    //  SubCategoryObjectValues = subArry
-    
-                    // console.log("values k:",SubCategoryObjectValues); // 1
-    
-                    // });
-    
-                    //FilterDataCopy()
-    
-                    setRecSubCategory(res.data.SubCategories);
-                    //let subs ;
-                    //console.log(res.data)
-    
-                    //console.log("gggg",SubCategory)
-                    // const result =  Object.values(res.data.SubCategories);
-                    //  setSubCategory(result)
-    
-                    // subs =  res.data.SubCategories
-    
-                    // const objectArray =  Object.entries(SubCategory[0]);
-    
-                    // objectArray.forEach(async ([key, value]) => {
-                    // console.log("key is h:",key); // 'one'
-                    // const subArry = value.subcategory;
-                    //  setFilteredSubCat(subArry)
-                    // const subArryLen = subArry.length;
-    
-                    //  setFiltredSubLen(subArryLen)
-                    // console.log("values k:",FilteredSubCat, FiltredSubLen); // 1
-    
-                    // });
-                })
-    
-                .catch((err) => {
-                    console.error(err);
-                });
-            // do stuff
-            //console.log("cccccc",selectedCategoryFromDropDown);
-        }, [selectedRecommdedCategoryFromDropDown]);
-    
-    
+                // console.log("c",c)
+                // console.log("cz",SubCategoriesFound)
+                // console.log("czlen", SubCategoryLength)
+
+                // const objectArray =  Object.entries(SubCategoriesFound[0]);
+
+                // objectArray.forEach(async ([key, value]) => {
+                // console.log("key is h:",key); // 'one'
+                // const subArry = value;
+                //  SubCategoryObjectValues = subArry
+
+                // console.log("values k:",SubCategoryObjectValues); // 1
+
+                // });
+
+                //FilterDataCopy()
+
+                setRecSubCategory(res.data.SubCategories);
+                //let subs ;
+                //console.log(res.data)
+
+                //console.log("gggg",SubCategory)
+                // const result =  Object.values(res.data.SubCategories);
+                //  setSubCategory(result)
+
+                // subs =  res.data.SubCategories
+
+                // const objectArray =  Object.entries(SubCategory[0]);
+
+                // objectArray.forEach(async ([key, value]) => {
+                // console.log("key is h:",key); // 'one'
+                // const subArry = value.subcategory;
+                //  setFilteredSubCat(subArry)
+                // const subArryLen = subArry.length;
+
+                //  setFiltredSubLen(subArryLen)
+                // console.log("values k:",FilteredSubCat, FiltredSubLen); // 1
+
+                // });
+            })
+
+            .catch((err) => {
+                console.error(err);
+            });
+        // do stuff
+        //console.log("cccccc",selectedCategoryFromDropDown);
+    }, [selectedRecommdedCategoryFromDropDown]);
+
     console.log(Category);
 
     const onSubmit = (data) => {
@@ -346,107 +340,85 @@ const EditProdutModal = (props) => {
                                 </div>
 
                                 <div className="Field-group mb-3">
-                                            <p>RecommendCategory*</p>
-                                            {Object.keys(Category).map(
-                                                (item, i) => (
-                                                    <select
+                                    <p>RecommendCategory*</p>
+                                    {Object.keys(Category).map((item, i) => (
+                                        <select
+                                            key={i}
+                                            {...register('recommendCategory')}
+                                            className="form-control"
+                                            onChange={(e) => {
+                                                selectedValue = e.target.value;
+                                                console.log(selectedValue);
+                                                setselectedRecommdedCategoryFromDropDown(
+                                                    e.target.value
+                                                );
+                                                //   dropHandler(e)
+                                                //{FilterDataCopy()}
+                                            }}
+                                            className="form-control"
+                                            placeholder="recommendCategory"
+                                        >
+                                            {Category[i].map((c, i) => (
+                                                <>
+                                                    <option
                                                         key={i}
-                                                        {...register(
-                                                            'recommendCategory'
-                                                        )}
-                                                        className="form-control"
-                                                        onChange={(e) => {
-                                                            selectedValue =
-                                                                e.target.value;
+                                                        value={c.category}
+                                                    >
+                                                        {c.category}
+                                                    </option>
+                                                </>
+                                            ))}
+                                        </select>
+                                    ))}
+                                </div>
+
+                                <div className="Field-group mb-3">
+                                    <p>RecommendedSubCategory*</p>
+
+                                    {Object.entries(RecSubCategory).map(
+                                        (item, i) => (
+                                            <select
+                                                key={items}
+                                                {...register(
+                                                    'recommendSubcategory',
+                                                    {
+                                                        required: true
+                                                    }
+                                                )}
+                                                className="form-control"
+                                            >
+                                                {RecSubCategory[i].map(
+                                                    (c, ix) => {
+                                                        let clen =
+                                                            c.subcategory
+                                                                .length;
+                                                        for (
+                                                            let index = ix;
+                                                            index < clen;
+                                                            index++
+                                                        ) {
+                                                            const element =
+                                                                c.subcategory;
                                                             console.log(
-                                                                selectedValue
+                                                                index,
+                                                                clen,
+                                                                element[index]
                                                             );
-                                                            setselectedRecommdedCategoryFromDropDown(
-                                                                e.target.value
+
+                                                            finalSubArray.push(
+                                                                element[index]
                                                             );
-                                                            //   dropHandler(e)
-                                                            //{FilterDataCopy()}
-                                                        }}
-                                                        className="form-control"
-                                                        placeholder="recommendCategory"
-                                                    >
-                                                        {Category[i].map(
-                                                            (c, i) => (
-                                                                <>
-                                                                    <option
-                                                                        key={i}
-                                                                        value={
-                                                                            c.category
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            c.category
-                                                                        }
-                                                                    </option>
-                                                                </>
-                                                            )
-                                                        )}
-                                                    </select>
-                                                )
-                                            )}
-                                        </div>
-                                       
+                                                        }
+                                                    }
+                                                )}
 
-                                        <div className="Field-group mb-3">
-                                            <p>RecommendedSubCategory*</p>
+                                                {finalSubArray.map(MakeItem)}
+                                            </select>
+                                        )
+                                    )}
+                                </div>
 
-                                            {Object.entries(RecSubCategory).map(
-                                                (item, i) => (
-                                                    <select
-                                                        key={items}
-                                                        {...register(
-                                                            'recommendSubcategory',
-                                                            {
-                                                                required: true
-                                                            }
-                                                        )}
-                                                        className="form-control"
-                                                    >
-                                                        {RecSubCategory[i].map(
-                                                            (c, ix) => {
-                                                                let clen =
-                                                                    c
-                                                                        .subcategory
-                                                                        .length;
-                                                                for (
-                                                                    let index = ix;
-                                                                    index <
-                                                                    clen;
-                                                                    index++
-                                                                ) {
-                                                                    const element =
-                                                                        c.subcategory;
-                                                                    console.log(
-                                                                        index,
-                                                                        clen,
-                                                                        element[
-                                                                            index
-                                                                        ]
-                                                                    );
-
-                                                                    finalSubArray.push(
-                                                                        element[
-                                                                            index
-                                                                        ]
-                                                                    );
-                                                                }
-                                                            }
-                                                        )}
-
-                                                        {finalSubArray.map(
-                                                            MakeItem
-                                                        )}
-                                                    </select>
-                                                )
-                                            )}
-                                        </div>
-                                        
-                     <div className="Field-group mb-3">
+                                <div className="Field-group mb-3">
                                     <p>Image*</p>
                                     <input
                                         required
@@ -520,7 +492,7 @@ const EditProdutModal = (props) => {
                                 </div>
                             </form>
                             {spinner ? (
-                                    <Loader
+                                <Loader
                                     type="spinner-circle"
                                     className="mt-5"
                                     bgColor={'#000000'}

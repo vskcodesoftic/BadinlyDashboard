@@ -56,7 +56,7 @@ const Profile = () => {
                                         />
                                     </div>
                                     <h3 className="profile-username text-center">
-                                        {GetCurrentUser().email}
+                                      {GetCurrentUser() ? GetCurrentUser().email : 'Admin'}
                                     </h3>
                                     <Link to="/changePassword">
                                         <button

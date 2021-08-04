@@ -45,13 +45,10 @@ const AddPrdouctPage = (props) => {
 
     const [recomdendSubcategory, setrecomdendSubcategory] = useState([]);
 
-
-
     const [
         selectedCategoryFromDropDown,
         setselectedCategoryFromDropDown
     ] = useState('');
-
 
     const [
         selectedRecommdedCategoryFromDropDown,
@@ -142,11 +139,8 @@ const AddPrdouctPage = (props) => {
         //console.log("cccccc",selectedCategoryFromDropDown);
     }, [selectedCategoryFromDropDown]);
 
-
-
-
-       //recommended sub category fetch
-       useEffect(() => {
+    //recommended sub category fetch
+    useEffect(() => {
         axios
             .get(
                 `https://badilnyint.com/api/admin/getSubs?CId=${selectedRecommdedCategoryFromDropDown}`
@@ -206,8 +200,6 @@ const AddPrdouctPage = (props) => {
         // do stuff
         //console.log("cccccc",selectedCategoryFromDropDown);
     }, [selectedRecommdedCategoryFromDropDown]);
-
-
 
     useEffect(() => {
         axios
@@ -544,7 +536,6 @@ const AddPrdouctPage = (props) => {
                                                 )
                                             )}
                                         </div>
-                                       
 
                                         <div className="Field-group mb-3">
                                             <p>RecommendedSubCategory*</p>

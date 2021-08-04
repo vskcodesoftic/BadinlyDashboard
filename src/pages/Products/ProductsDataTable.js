@@ -73,8 +73,7 @@ const ProductsDataTable = () => {
 
     const [recCategory, setrecCategory] = useState('');
 
-    const [recSubCategory, setrecSubCategory] = useState('')
-
+    const [recSubCategory, setrecSubCategory] = useState('');
 
     const handleClick = (event, rowData) => {
         event.preventDefault();
@@ -91,7 +90,7 @@ const ProductsDataTable = () => {
         setquantity(rowData.quantity);
 
         setrecSubCategory(rowData.recommendSubcategory);
-        setrecCategory(rowData.recommendCategory)
+        setrecCategory(rowData.recommendCategory);
 
         setShow(true);
     };
@@ -364,8 +363,8 @@ const ProductsDataTable = () => {
                             quantity={quantity}
                             subcategory={subcategory}
                             category={category}
-                            reccomendedSubCategoryOfProduct = {recSubCategory}
-                            recommedCateogyOfProduct = {recCategory}
+                            reccomendedSubCategoryOfProduct={recSubCategory}
+                            recommedCateogyOfProduct={recCategory}
                         />
                     </Modal.Body>
                     <Modal.Footer>
